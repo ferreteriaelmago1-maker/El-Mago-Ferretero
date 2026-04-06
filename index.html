@@ -156,7 +156,7 @@
         radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
         linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
       text-align: center;
-      padding: 80px 20px 90px;
+      padding: 80px 20px 70px;
     }
 
     .hero-logo {
@@ -179,31 +179,7 @@
       font-size: 20px;
       color: #d7d7d7;
       max-width: 760px;
-      margin: 0 auto 26px;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 20px;
-      background: #ff6a00;
-      color: white;
-      border-radius: 10px;
-      display: inline-block;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #333;
-      color: white;
+      margin: 0 auto;
     }
 
     .section {
@@ -243,16 +219,6 @@
       display: none;
     }
 
-    .card-tag {
-      display: inline-block;
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(91,33,182,0.18);
-      color: #c9b0ff;
-      margin-bottom: 14px;
-    }
-
     .card h3 {
       margin: 0 0 8px;
       font-size: 22px;
@@ -273,6 +239,23 @@
     .card .btn {
       width: 100%;
       text-align: center;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background: #ff6a00;
+      color: white;
+      border-radius: 10px;
+      display: inline-block;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #333;
+      color: white;
     }
 
     .info-grid {
@@ -540,14 +523,14 @@
         <a href="index.html">Inicio</a>
 
         <div class="dropdown-container">
-          <a href="#catalogo" class="dropdown-btn">Catálogo ▼</a>
+          <a href="catalogo.html" class="dropdown-btn">Catálogo ▼</a>
           <div class="dropdown">
-            <a href="#herramientas">Herramientas</a>
-            <a href="#electricidad">Electricidad</a>
-            <a href="#plomeria">Plomería</a>
-            <a href="#pintureria">Pinturería</a>
-            <a href="#tornilleria">Tornillería</a>
-            <a href="#jardin">Jardín</a>
+            <a href="herramientas.html">Herramientas</a>
+            <a href="electricidad.html">Electricidad</a>
+            <a href="plomeria.html">Plomería</a>
+            <a href="pintureria.html">Pinturería</a>
+            <a href="tornilleria.html">Tornillería</a>
+            <a href="jardin.html">Jardín</a>
           </div>
         </div>
 
@@ -567,21 +550,15 @@
     <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo" />
     <h1>EL MAGO FERRETERO</h1>
     <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
-
-    <div class="hero-actions">
-      <a class="btn" href="#catalogo">Ver catálogo</a>
-      <a class="btn btn-outline" href="#contacto">Contacto</a>
-    </div>
   </header>
 
-  <div class="section" id="catalogo">
-    <h2>Catálogo general</h2>
-    <p class="section-text">Todos los productos visibles en una sola página. Podés buscarlos arriba o recorrer por rubro.</p>
+  <div class="section" id="productos">
+    <h2>Productos destacados</h2>
+    <p class="section-text">Una selección de productos destacadas para mostrar lo mejor de la tienda desde el inicio.</p>
 
     <div class="products" id="productGrid">
 
       <div class="card" data-name="martillo" data-category="herramientas" data-price="3500">
-        <div class="card-tag">Herramientas</div>
         <h3>Martillo</h3>
         <p>Ideal para trabajos generales.</p>
         <div class="price">$3500</div>
@@ -589,124 +566,63 @@
       </div>
 
       <div class="card" data-name="llave francesa" data-category="herramientas" data-price="4200">
-        <div class="card-tag">Herramientas</div>
         <h3>Llave francesa</h3>
         <p>Ajustable y práctica.</p>
         <div class="price">$4200</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
 
-      <div class="card" data-name="cable taller" data-category="electricidad" data-price="3200">
-        <div class="card-tag">Electricidad</div>
-        <h3>Cable taller</h3>
-        <p>Flexible y resistente.</p>
-        <div class="price">$3200</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
       <div class="card" data-name="lampara led" data-category="electricidad" data-price="2100">
-        <div class="card-tag">Electricidad</div>
         <h3>Lámpara LED</h3>
-        <p>Bajo consumo.</p>
+        <p>Bajo consumo y excelente rendimiento.</p>
         <div class="price">$2100</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
 
-      <div class="card" data-name="caño pvc" data-category="plomeria" data-price="2800">
-        <div class="card-tag">Plomería</div>
-        <h3>Caño PVC</h3>
-        <p>Para instalaciones sanitarias.</p>
-        <div class="price">$2800</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
-      <div class="card" data-name="llave de paso" data-category="plomeria" data-price="3500">
-        <div class="card-tag">Plomería</div>
-        <h3>Llave de paso</h3>
-        <p>Corte de agua seguro.</p>
-        <div class="price">$3500</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
       <div class="card" data-name="rodillo" data-category="pintureria" data-price="2200">
-        <div class="card-tag">Pinturería</div>
         <h3>Rodillo</h3>
-        <p>Ideal para paredes.</p>
+        <p>Ideal para paredes y pintura rápida.</p>
         <div class="price">$2200</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
 
-      <div class="card" data-name="esmalte sintetico" data-category="pintureria" data-price="5600">
-        <div class="card-tag">Pinturería</div>
-        <h3>Esmalte sintético</h3>
-        <p>Acabado resistente.</p>
-        <div class="price">$5600</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
-      <div class="card" data-name="tornillo madera" data-category="tornilleria" data-price="500">
-        <div class="card-tag">Tornillería</div>
-        <h3>Tornillo para madera</h3>
-        <p>Medida estándar.</p>
-        <div class="price">$500</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
       <div class="card" data-name="tarugo" data-category="tornilleria" data-price="300">
-        <div class="card-tag">Tornillería</div>
         <h3>Tarugo</h3>
-        <p>Para fijaciones seguras.</p>
+        <p>Para fijaciones seguras y prolijas.</p>
         <div class="price">$300</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
 
       <div class="card" data-name="manguera" data-category="jardin" data-price="7800">
-        <div class="card-tag">Jardín</div>
         <h3>Manguera</h3>
-        <p>Riego y limpieza exterior.</p>
+        <p>Ideal para riego y limpieza exterior.</p>
         <div class="price">$7800</div>
-        <button class="btn add-to-cart">Agregar al carrito</button>
-      </div>
-
-      <div class="card" data-name="tijera de poda" data-category="jardin" data-price="5900">
-        <div class="card-tag">Jardín</div>
-        <h3>Tijera de poda</h3>
-        <p>Corte prolijo de ramas.</p>
-        <div class="price">$5900</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
 
     </div>
   </div>
 
-  <div class="section" id="herramientas">
-    <h2>Herramientas</h2>
-    <p class="section-text">Martillos, llaves y herramientas de uso diario.</p>
-  </div>
+  <div class="section">
+    <h2>¿Por qué elegirnos?</h2>
+    <p class="section-text">Queremos que comprar en El Mago Ferretero sea simple, rápido y claro.</p>
 
-  <div class="section" id="electricidad">
-    <h2>Electricidad</h2>
-    <p class="section-text">Cables, lámparas y materiales eléctricos.</p>
-  </div>
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Compra simple</h3>
+        <p>Elegí tus productos y agregalos al carrito sin complicaciones.</p>
+      </div>
 
-  <div class="section" id="plomeria">
-    <h2>Plomería</h2>
-    <p class="section-text">Conexiones, caños y repuestos sanitarios.</p>
-  </div>
+      <div class="info-box">
+        <h3>Atención directa</h3>
+        <p>Respondemos rápido por WhatsApp para ayudarte con cualquier consulta.</p>
+      </div>
 
-  <div class="section" id="pintureria">
-    <h2>Pinturería</h2>
-    <p class="section-text">Rodillos, esmaltes y accesorios para pintar.</p>
-  </div>
-
-  <div class="section" id="tornilleria">
-    <h2>Tornillería</h2>
-    <p class="section-text">Tornillos, tarugos y fijaciones.</p>
-  </div>
-
-  <div class="section" id="jardin">
-    <h2>Jardín</h2>
-    <p class="section-text">Mangueras, tijeras de poda y más.</p>
+      <div class="info-box">
+        <h3>Pagos online</h3>
+        <p>Mercado Pago preparado para integrarse al proceso de compra.</p>
+      </div>
+    </div>
   </div>
 
   <div class="section" id="contacto">
@@ -764,7 +680,7 @@
       <button class="btn" id="checkoutBtn" style="width:100%; margin-bottom:10px;">Finalizar compra</button>
       <button class="btn btn-outline" id="mercadoPagoBtn" style="width:100%;">Pagar con Mercado Pago</button>
       <div class="checkout-note">
-        Mercado Pago está cargado como demo visual. Para cobrar de verdad después hay que conectarlo con tu cuenta y credenciales reales.
+        Mercado Pago está cargado como demo visual. Para cobrar de verdad después hay que conectar tu cuenta de Mercado Pago.
       </div>
     </div>
   </div>
@@ -813,7 +729,6 @@
         div.className = 'cart-item';
         div.innerHTML = `
           <h4>${item.name}</h4>
-          <p>${item.category}</p>
           <p>${formatPrice(item.price)} x ${item.qty}</p>
           <div class="qty-controls">
             <button onclick="changeQty(${index}, -1)">-</button>
@@ -829,12 +744,12 @@
       cartCount.textContent = totalCount;
     }
 
-    function addToCart(name, category, price) {
+    function addToCart(name, price) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
         existing.qty += 1;
       } else {
-        cart.push({ name, category, price, qty: 1 });
+        cart.push({ name, price, qty: 1 });
       }
       updateCart();
       cartDrawer.classList.add('open');
@@ -860,9 +775,8 @@
       button.addEventListener('click', (e) => {
         const card = e.target.closest('.card');
         const name = card.dataset.name;
-        const category = card.dataset.category;
         const price = Number(card.dataset.price);
-        addToCart(name, category, price);
+        addToCart(name, price);
       });
     });
 
@@ -879,8 +793,7 @@
 
       cards.forEach(card => {
         const name = card.dataset.name.toLowerCase();
-        const category = card.dataset.category.toLowerCase();
-        const matches = name.includes(term) || category.includes(term);
+        const matches = name.includes(term);
         card.classList.toggle('hidden', !matches);
       });
     });
