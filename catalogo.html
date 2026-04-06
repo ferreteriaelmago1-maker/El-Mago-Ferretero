@@ -4,121 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo | El Mago Ferretero</title>
+
 <style>
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #0B0B0B;
   color: white;
 }
+
+/* NAV */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 32px;
-  background: rgba(11,11,11,0.97);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 1px solid #1f1f1f;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 32px;
+  background:#0B0B0B;
+  border-bottom:1px solid #222;
 }
-.logo {
-  color: #FF6A00;
-  font-weight: bold;
-  font-size: 20px;
-}
+.logo { color:#FF6A00; font-weight:bold; }
+
 .menu {
-  display: flex;
-  gap: 28px;
-  align-items: center;
+  display:flex;
+  gap:25px;
 }
+
 .menu a {
-  color: white;
-  text-decoration: none;
-  font-size: 15px;
+  color:white;
+  text-decoration:none;
 }
+
 .menu a:hover {
-  color: #FF6A00;
+  color:#FF6A00;
 }
-.page-header {
-  text-align: center;
-  padding: 60px 20px 30px;
-  background:
-    radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
-    radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
-    linear-gradient(180deg, #121212 0%, #0B0B0B 100%);
+
+/* HEADER */
+.header {
+  text-align:center;
+  padding:60px 20px;
 }
-.page-header h1 {
-  margin: 0 0 10px;
-  color: #FF6A00;
-  font-size: 42px;
+
+.header h1 {
+  color:#FF6A00;
 }
-.page-header p {
-  color: #d7d7d7;
-  max-width: 760px;
-  margin: 0 auto;
+
+/* GRID */
+.products {
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+  padding:30px;
 }
-.section {
-  padding: 50px 20px;
-}
-.rubros {
-  display: flex;
-  gap: 22px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+
 .card {
-  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
-  padding: 22px;
-  width: 260px;
-  border-radius: 16px;
-  border: 1px solid #232323;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.22);
-  text-align: left;
+  background:#151515;
+  width:240px;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #222;
 }
-.card h3 {
-  margin-top: 0;
-  color: #FF6A00;
+
+.tag {
+  font-size:12px;
+  color:#aaa;
 }
-.card p {
-  color: #d0d0d0;
-  line-height: 1.45;
+
+.price {
+  color:#FF6A00;
+  font-size:22px;
+  margin:10px 0;
 }
+
 .btn {
-  padding: 12px 20px;
-  background: #FF6A00;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  display: inline-block;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
+  background:#FF6A00;
+  color:white;
+  padding:10px;
+  display:block;
+  text-align:center;
+  border-radius:8px;
+  text-decoration:none;
 }
-.whatsapp-btn {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  background: #25D366;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-}
-footer {
-  border-top: 1px solid #202020;
-  padding: 28px 20px 40px;
-  text-align: center;
-  color: #bcbcbc;
-  font-size: 14px;
+
+/* WHATSAPP */
+.whatsapp {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 </style>
 </head>
+
 <body>
 
 <nav class="navbar">
@@ -130,57 +114,71 @@ footer {
   </div>
 </nav>
 
-<div class="page-header">
-  <h1>Catálogo</h1>
-  <p>Elegí un rubro para ver todos los productos disponibles.</p>
+<div class="header">
+  <h1>Catálogo completo</h1>
+  <p>Todos los productos disponibles</p>
 </div>
 
-<div class="section">
-  <div class="rubros">
-    <div class="card">
-      <h3>Herramientas</h3>
-      <p>Llaves, martillos, destornilladores, alicates y más.</p>
-      <a class="btn" href="herramientas.html">Ver rubro</a>
-    </div>
+<div class="products">
 
-    <div class="card">
-      <h3>Electricidad</h3>
-      <p>Cables, teclas, llaves térmicas, lámparas y accesorios.</p>
-      <a class="btn" href="electricidad.html">Ver rubro</a>
-    </div>
-
-    <div class="card">
-      <h3>Plomería</h3>
-      <p>Caños, conexiones, selladores, llaves de paso y más.</p>
-      <a class="btn" href="plomeria.html">Ver rubro</a>
-    </div>
-
-    <div class="card">
-      <h3>Pinturería</h3>
-      <p>Pinceles, rodillos, esmaltes, látex y accesorios.</p>
-      <a class="btn" href="pintureria.html">Ver rubro</a>
-    </div>
-
-    <div class="card">
-      <h3>Tornillería</h3>
-      <p>Tornillos, tuercas, arandelas, tarugos y fijaciones.</p>
-      <a class="btn" href="tornilleria.html">Ver rubro</a>
-    </div>
-
-    <div class="card">
-      <h3>Jardín</h3>
-      <p>Mangueras, palas, tijeras de poda, regaderas y más.</p>
-      <a class="btn" href="jardin.html">Ver rubro</a>
-    </div>
+  <!-- HERRAMIENTAS -->
+  <div class="card">
+    <div class="tag">Herramientas</div>
+    <h3>Martillo</h3>
+    <div class="price">$3500</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
   </div>
+
+  <div class="card">
+    <div class="tag">Herramientas</div>
+    <h3>Llave francesa</h3>
+    <div class="price">$4200</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
+  <!-- ELECTRICIDAD -->
+  <div class="card">
+    <div class="tag">Electricidad</div>
+    <h3>Cable taller</h3>
+    <div class="price">$3200</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
+  <div class="card">
+    <div class="tag">Electricidad</div>
+    <h3>Lámpara LED</h3>
+    <div class="price">$2100</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
+  <!-- PLOMERIA -->
+  <div class="card">
+    <div class="tag">Plomería</div>
+    <h3>Caño PVC</h3>
+    <div class="price">$2800</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
+  <!-- PINTURERIA -->
+  <div class="card">
+    <div class="tag">Pinturería</div>
+    <h3>Rodillo</h3>
+    <div class="price">$2200</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
+  <!-- JARDIN -->
+  <div class="card">
+    <div class="tag">Jardín</div>
+    <h3>Manguera</h3>
+    <div class="price">$7800</div>
+    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  </div>
+
 </div>
 
-<footer>
-  El Mago Ferretero · Catálogo general
-</footer>
-
-<a href="https://wa.me/541127416948" class="whatsapp-btn">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WhatsApp">
+<a href="https://wa.me/541127416948" class="whatsapp">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30">
 </a>
 
 </body>
