@@ -20,6 +20,56 @@ body { margin:0; font-family:Arial; background:#0B0B0B; color:white; }
 h1 { color:#FF6A00; }
 
 .btn {
+  .menu {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+
+.menu-btn {
+  padding: 12px 22px;
+  background: #FF6A00;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.dropdown a {
+  display: block;
+  padding: 12px 16px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #222;
+}
+
+.dropdown a:last-child {
+  border-bottom: none;
+}
+
+.dropdown a:hover {
+  background: #FF6A00;
+}
+
+.menu:hover .dropdown {
+  display: block;
+}
+
   padding:10px 20px;
   background:#FF6A00;
   color:white;
@@ -63,7 +113,18 @@ h1 { color:#FF6A00; }
 
     <p style="font-size:18px;">Todo lo que necesitás en ferretería</p>
 
-    <a class="btn" href="#">Ver catálogo</a>
+    <div class="menu">
+  <div class="menu-btn">Catálogo</div>
+  <div class="dropdown">
+    <a href="#herramientas">Herramientas</a>
+    <a href="#electricidad">Electricidad</a>
+    <a href="#plomeria">Plomería</a>
+    <a href="#pintureria">Pinturería</a>
+    <a href="#tornilleria">Tornillería</a>
+    <a href="#jardin">Jardín</a>
+  </div>
+</div>
+
     <a class="btn" href="https://wa.me/541127416948">WhatsApp</a>
 
   </div>
@@ -93,6 +154,36 @@ h1 { color:#FF6A00; }
 
 </div>
 </div>
+  <div class="section" id="herramientas">
+  <h2>Herramientas</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de herramientas.</p>
+</div>
+
+<div class="section" id="electricidad">
+  <h2>Electricidad</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de electricidad.</p>
+</div>
+
+<div class="section" id="plomeria">
+  <h2>Plomería</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de plomería.</p>
+</div>
+
+<div class="section" id="pintureria">
+  <h2>Pinturería</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de pinturería.</p>
+</div>
+
+<div class="section" id="tornilleria">
+  <h2>Tornillería</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de tornillería.</p>
+</div>
+
+<div class="section" id="jardin">
+  <h2>Jardín</h2>
+  <p>Próximamente vas a encontrar acá todos los productos de jardín.</p>
+</div>
+
 
 </body>
 </html>
