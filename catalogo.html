@@ -1,185 +1,772 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo | El Mago Ferretero</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Mago Ferretero</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-<style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0B0B0B;
-  color: white;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+    }
 
-/* NAV */
-.navbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 32px;
-  background:#0B0B0B;
-  border-bottom:1px solid #222;
-}
-.logo { color:#FF6A00; font-weight:bold; }
+    a { text-decoration: none; }
 
-.menu {
-  display:flex;
-  gap:25px;
-}
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 24px;
+      background: rgba(11,11,11,0.97);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #1f1f1f;
+      flex-wrap: wrap;
+    }
 
-.menu a {
-  color:white;
-  text-decoration:none;
-}
+    .nav-left, .nav-center, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
 
-.menu a:hover {
-  color:#FF6A00;
-}
+    .logo {
+      color: #ff6a00;
+      font-weight: bold;
+      font-size: 20px;
+      white-space: nowrap;
+    }
 
-/* HEADER */
-.header {
-  text-align:center;
-  padding:60px 20px;
-}
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #171717;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 8px 12px;
+      min-width: 280px;
+    }
 
-.header h1 {
-  color:#FF6A00;
-}
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      width: 100%;
+      font-size: 14px;
+    }
 
-/* GRID */
-.products {
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
-  justify-content:center;
-  padding:30px;
-}
+    .search-box input::placeholder {
+      color: #8f8f8f;
+    }
 
-.card {
-  background:#151515;
-  width:240px;
-  padding:20px;
-  border-radius:12px;
-  border:1px solid #222;
-}
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
 
-.tag {
-  font-size:12px;
-  color:#aaa;
-}
+    .menu a, .dropdown-btn {
+      color: white;
+      font-size: 15px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
 
-.price {
-  color:#FF6A00;
-  font-size:22px;
-  margin:10px 0;
-}
+    .menu a:hover, .dropdown-btn:hover {
+      color: #ff6a00;
+    }
 
-.btn {
-  background:#FF6A00;
-  color:white;
-  padding:10px;
-  display:block;
-  text-align:center;
-  border-radius:8px;
-  text-decoration:none;
-}
+    .dropdown-container {
+      position: relative;
+    }
 
-/* WHATSAPP */
-.whatsapp {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-</style>
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: #141414;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      min-width: 230px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+      overflow: hidden;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 13px 16px;
+      color: white;
+      border-bottom: 1px solid #222;
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background: #ff6a00;
+      color: white;
+    }
+
+    .dropdown-container:hover .dropdown,
+    .dropdown-container:focus-within .dropdown {
+      display: block;
+    }
+
+    .cart-button {
+      position: relative;
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #25d366;
+      color: white;
+      border-radius: 999px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header {
+      background:
+        radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
+        linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
+      text-align: center;
+      padding: 80px 20px 70px;
+    }
+
+    .hero-logo {
+      width: 190px;
+      max-width: 70%;
+      display: block;
+      margin: 0 auto 28px auto;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: 50px;
+      line-height: 1.05;
+      color: #ff6a00;
+    }
+
+    .hero-text {
+      font-size: 20px;
+      color: #d7d7d7;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 56px 20px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section p.section-text {
+      color: #bfbfbf;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .products {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
+      padding: 22px;
+      width: 250px;
+      border-radius: 16px;
+      border: 1px solid #232323;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+      text-align: left;
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #d0d0d0;
+      min-height: 44px;
+    }
+
+    .price {
+      font-size: 28px;
+      font-weight: bold;
+      color: #ff6a00;
+      margin: 12px 0 18px;
+    }
+
+    .card .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background: #ff6a00;
+      color: white;
+      border-radius: 10px;
+      display: inline-block;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .shipping-box {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #151515;
+      border: 1px solid #242424;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+    }
+
+    .shipping-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .shipping-box input, .shipping-box select {
+      width: 100%;
+      background: #101010;
+      border: 1px solid #2b2b2b;
+      border-radius: 10px;
+      color: white;
+      padding: 12px;
+      outline: none;
+    }
+
+    .shipping-result {
+      margin-top: 16px;
+      color: #d7d7d7;
+      font-weight: bold;
+    }
+
+    .contact-box {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #151515;
+      border: 1px solid #242424;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+    }
+
+    .contact-item {
+      margin-bottom: 16px;
+      color: #d0d0d0;
+      line-height: 1.5;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      background: #25d366;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      z-index: 1100;
+    }
+
+    footer {
+      border-top: 1px solid #202020;
+      padding: 28px 20px 40px;
+      text-align: center;
+      color: #bcbcbc;
+      font-size: 14px;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      max-width: 100%;
+      height: 100vh;
+      background: #111;
+      border-left: 1px solid #232323;
+      box-shadow: -12px 0 30px rgba(0,0,0,0.35);
+      z-index: 1200;
+      transition: right 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #232323;
+    }
+
+    .cart-header h3 {
+      margin: 0;
+      color: #ff6a00;
+    }
+
+    .cart-close {
+      background: transparent;
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+    }
+
+    .cart-empty {
+      color: #bcbcbc;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #232323;
+      padding: 0 0 14px;
+      margin-bottom: 14px;
+    }
+
+    .cart-item h4 {
+      margin: 0 0 6px;
+    }
+
+    .cart-item p {
+      margin: 4px 0;
+      color: #cfcfcf;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .qty-controls button {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .remove-btn {
+      margin-top: 8px;
+      background: transparent;
+      border: none;
+      color: #ff6a00;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .cart-footer {
+      border-top: 1px solid #232323;
+      padding: 18px 20px;
+    }
+
+    .cart-total {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 14px;
+      color: #ff6a00;
+    }
+
+    .checkout-note {
+      color: #bcbcbc;
+      font-size: 13px;
+      margin-top: 10px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 14px 16px;
+      }
+
+      .nav-left, .nav-center, .nav-right {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .search-box {
+        min-width: 100%;
+      }
+
+      .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .hero-text {
+        font-size: 17px;
+      }
+
+      .shipping-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<nav class="navbar">
-  <div class="logo">🧙 El Mago Ferretero</div>
-  <div class="menu">
-    <a href="index.html">Inicio</a>
-    <a href="catalogo.html">Catálogo</a>
-    <a href="contacto.html">Contacto</a>
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar productos..." />
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <div class="logo">🧙 El Mago Ferretero</div>
+
+      <div class="menu">
+        <a href="index.html">Inicio</a>
+
+        <div class="dropdown-container">
+          <a href="catalogo.html" class="dropdown-btn">Catálogo ▼</a>
+          <div class="dropdown">
+            <a href="herramientas.html">Herramientas</a>
+            <a href="electricidad.html">Electricidad</a>
+            <a href="plomeria.html">Plomería</a>
+            <a href="pintureria.html">Pinturería</a>
+            <a href="tornilleria.html">Tornillería</a>
+            <a href="jardin.html">Jardín</a>
+          </div>
+        </div>
+
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="cart-button" id="openCartBtn">
+        🛒 Carrito
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <header>
+    <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo" />
+    <h1>EL MAGO FERRETERO</h1>
+    <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
+  </header>
+
+  <div class="section" id="productos">
+    <h2>Productos destacados</h2>
+    <p class="section-text">Una selección de productos destacados para mostrar lo mejor de la tienda desde el inicio.</p>
+
+    <div class="products" id="productGrid">
+
+      <div class="card" data-name="martillo" data-price="3500">
+        <h3>Martillo</h3>
+        <p>Ideal para trabajos generales.</p>
+        <div class="price">$3500</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="llave francesa" data-price="4200">
+        <h3>Llave francesa</h3>
+        <p>Ajustable y práctica.</p>
+        <div class="price">$4200</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="lampara led" data-price="2100">
+        <h3>Lámpara LED</h3>
+        <p>Bajo consumo y excelente rendimiento.</p>
+        <div class="price">$2100</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="rodillo" data-price="2200">
+        <h3>Rodillo</h3>
+        <p>Ideal para paredes y pintura rápida.</p>
+        <div class="price">$2200</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="tarugo" data-price="300">
+        <h3>Tarugo</h3>
+        <p>Para fijaciones seguras y prolijas.</p>
+        <div class="price">$300</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="manguera" data-price="7800">
+        <h3>Manguera</h3>
+        <p>Ideal para riego y limpieza exterior.</p>
+        <div class="price">$7800</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+    </div>
   </div>
-</nav>
 
-<div class="header">
-  <h1>Catálogo completo</h1>
-  <p>Todos los productos disponibles</p>
-</div>
-
-<div class="products">
-
-  <!-- HERRAMIENTAS -->
-  <div class="card">
-    <div class="tag">Herramientas</div>
-    <h3>Martillo</h3>
-    <div class="price">$3500</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  <div class="section" id="contacto">
+    <h2>Contacto</h2>
+    <div class="contact-box">
+      <div class="contact-item"><strong>Mail:</strong><br>contacto@elmagoferretero.com</div>
+      <div class="contact-item"><strong>WhatsApp:</strong><br>+54 11 2741 6948</div>
+      <div class="contact-item"><strong>Dirección:</strong><br>Av. Ejemplo 1234, Buenos Aires</div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="tag">Herramientas</div>
-    <h3>Llave francesa</h3>
-    <div class="price">$4200</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  <div class="section" id="envios">
+    <h2>Calculá tu envío</h2>
+    <p class="section-text">Podés estimar el costo según zona y cantidad de productos.</p>
+
+    <div class="shipping-box">
+      <label for="shippingZone">Zona</label>
+      <div class="shipping-grid">
+        <select id="shippingZone">
+          <option value="0">Retiro en local - $0</option>
+          <option value="2500">CABA - $2500</option>
+          <option value="3500">GBA - $3500</option>
+          <option value="5500">Interior del país - $5500</option>
+        </select>
+
+        <input type="number" id="shippingItems" min="1" value="1" placeholder="Cantidad de productos" />
+
+        <button class="btn" id="calcShippingBtn">Calcular</button>
+      </div>
+
+      <div class="shipping-result" id="shippingResult">Costo estimado: $0</div>
+    </div>
   </div>
 
-  <!-- ELECTRICIDAD -->
-  <div class="card">
-    <div class="tag">Electricidad</div>
-    <h3>Cable taller</h3>
-    <div class="price">$3200</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
+  <footer>
+    El Mago Ferretero · Ferretería online
+  </footer>
+
+  <a href="https://wa.me/541127416948" class="whatsapp-btn" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WhatsApp" />
+  </a>
+
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Tu carrito</h3>
+      <button class="cart-close" id="closeCartBtn">&times;</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Todavía no agregaste productos.</p>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total" id="cartTotal">Total: $0</div>
+      <button class="btn" id="checkoutBtn" style="width:100%; margin-bottom:10px;">Finalizar compra</button>
+      <button class="btn" id="mercadoPagoBtn" style="width:100%;">Pagar con Mercado Pago</button>
+      <div class="checkout-note">
+        Mercado Pago está cargado como demo visual. Para cobrar de verdad después hay que conectar tu cuenta de Mercado Pago.
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="tag">Electricidad</div>
-    <h3>Lámpara LED</h3>
-    <div class="price">$2100</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
-  </div>
+  <script>
+    const cart = [];
+    const cartDrawer = document.getElementById('cartDrawer');
+    const openCartBtn = document.getElementById('openCartBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartCount = document.getElementById('cartCount');
+    const addButtons = document.querySelectorAll('.add-to-cart');
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.card');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const mercadoPagoBtn = document.getElementById('mercadoPagoBtn');
+    const shippingZone = document.getElementById('shippingZone');
+    const shippingItems = document.getElementById('shippingItems');
+    const calcShippingBtn = document.getElementById('calcShippingBtn');
+    const shippingResult = document.getElementById('shippingResult');
 
-  <!-- PLOMERIA -->
-  <div class="card">
-    <div class="tag">Plomería</div>
-    <h3>Caño PVC</h3>
-    <div class="price">$2800</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
-  </div>
+    function formatPrice(value) {
+      return '$' + value.toLocaleString('es-AR');
+    }
 
-  <!-- PINTURERIA -->
-  <div class="card">
-    <div class="tag">Pinturería</div>
-    <h3>Rodillo</h3>
-    <div class="price">$2200</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
-  </div>
+    function updateCart() {
+      cartItems.innerHTML = '';
 
-  <!-- JARDIN -->
-  <div class="card">
-    <div class="tag">Jardín</div>
-    <h3>Manguera</h3>
-    <div class="price">$7800</div>
-    <a class="btn" href="https://wa.me/541127416948">Comprar</a>
-  </div>
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="cart-empty">Todavía no agregaste productos.</p>';
+        cartTotal.textContent = 'Total: $0';
+        cartCount.textContent = '0';
+        return;
+      }
 
-</div>
+      let total = 0;
+      let totalCount = 0;
 
-<a href="https://wa.me/541127416948" class="whatsapp">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30">
-</a>
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        totalCount += item.qty;
 
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <h4>${item.name}</h4>
+          <p>${formatPrice(item.price)} x ${item.qty}</p>
+          <div class="qty-controls">
+            <button onclick="changeQty(${index}, -1)">-</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${index}, 1)">+</button>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Eliminar</button>
+        `;
+        cartItems.appendChild(div);
+      });
+
+      cartTotal.textContent = 'Total: ' + formatPrice(total);
+      cartCount.textContent = totalCount;
+    }
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCart();
+      cartDrawer.classList.add('open');
+    }
+
+    function changeQty(index, amount) {
+      cart[index].qty += amount;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    window.changeQty = changeQty;
+    window.removeItem = removeItem;
+
+    addButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        const name = card.dataset.name;
+        const price = Number(card.dataset.price);
+        addToCart(name, price);
+      });
+    });
+
+    openCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.add('open');
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+    });
+
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase().trim();
+
+      cards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const matches = name.includes(term);
+        card.classList.toggle('hidden', !matches);
+      });
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+      alert('Checkout demo listo. El próximo paso sería pedir datos del cliente y confirmar el pedido antes del pago.');
+    });
+
+    mercadoPagoBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Agregá productos al carrito antes de pagar.');
+        return;
+      }
+      alert('Botón de Mercado Pago en modo demo. Para activarlo de verdad hay que conectar tu cuenta de Mercado Pago.');
+    });
+
+    calcShippingBtn.addEventListener('click', () => {
+      const zoneCost = Number(shippingZone.value);
+      const qty = Math.max(1, Number(shippingItems.value) || 1);
+      const extra = qty > 3 ? (qty - 3) * 400 : 0;
+      const totalShipping = zoneCost + extra;
+      shippingResult.textContent = 'Costo estimado: ' + formatPrice(totalShipping);
+    });
+
+    updateCart();
+  </script>
 </body>
 </html>
