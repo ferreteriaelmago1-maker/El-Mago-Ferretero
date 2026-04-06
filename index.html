@@ -6,13 +6,8 @@
 <title>El Mago Ferretero</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -21,7 +16,6 @@ body {
   color: white;
 }
 
-/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -61,7 +55,6 @@ body {
   color: #FF6A00;
 }
 
-/* DROPDOWN */
 .dropdown-container {
   position: relative;
 }
@@ -106,7 +99,6 @@ body {
   display: block;
 }
 
-/* HERO */
 header {
   background:
     radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
@@ -156,7 +148,6 @@ h1 {
   flex-wrap: wrap;
 }
 
-/* BOTONES */
 .btn {
   padding: 12px 20px;
   background: #FF6A00;
@@ -179,7 +170,6 @@ h1 {
   color: white;
 }
 
-/* SECCIONES */
 .section {
   padding: 58px 20px;
   text-align: center;
@@ -196,52 +186,34 @@ h1 {
   margin: 0 auto 34px;
 }
 
-/* PRODUCTOS */
-.products {
+.info-grid {
   display: flex;
-  gap: 22px;
-  justify-content: center;
+  gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.card {
-  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
-  padding: 22px;
-  width: 240px;
+.info-box {
+  width: 260px;
+  background: #151515;
+  border: 1px solid #242424;
   border-radius: 16px;
-  border: 1px solid #232323;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+  padding: 22px;
   text-align: left;
 }
 
-.card-tag {
-  display: inline-block;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(91,33,182,0.18);
-  color: #c9b0ff;
-  margin-bottom: 14px;
-}
-
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
-}
-
-.price {
-  font-size: 28px;
-  font-weight: bold;
+.info-box h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
   color: #FF6A00;
-  margin: 12px 0 18px;
 }
 
-.card .btn {
-  width: 100%;
-  text-align: center;
+.info-box p {
+  margin: 0;
+  color: #d0d0d0;
+  line-height: 1.45;
 }
 
-/* WHATSAPP */
 .whatsapp-btn {
   position: fixed;
   bottom: 22px;
@@ -257,7 +229,6 @@ h1 {
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
-/* FOOTER */
 footer {
   border-top: 1px solid #202020;
   padding: 28px 20px 40px;
@@ -266,7 +237,6 @@ footer {
   font-size: 14px;
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
   .navbar {
     padding: 14px 16px;
@@ -304,7 +274,7 @@ footer {
     font-size: 28px;
   }
 
-  .card {
+  .info-box {
     width: 100%;
     max-width: 320px;
   }
@@ -318,17 +288,17 @@ footer {
   <div class="logo">🧙 El Mago Ferretero</div>
 
   <div class="menu">
-    <a href="#inicio">Inicio</a>
+    <a href="index.html">Inicio</a>
 
     <div class="dropdown-container">
       <button class="dropdown-btn">Catálogo ▼</button>
       <div class="dropdown">
-        <a href="#herramientas">Herramientas</a>
-        <a href="#electricidad">Electricidad</a>
-        <a href="#plomeria">Plomería</a>
-        <a href="#pintureria">Pinturería</a>
-        <a href="#tornilleria">Tornillería</a>
-        <a href="#jardin">Jardín</a>
+        <a href="herramientas.html">Herramientas</a>
+        <a href="#">Electricidad</a>
+        <a href="#">Plomería</a>
+        <a href="#">Pinturería</a>
+        <a href="#">Tornillería</a>
+        <a href="#">Jardín</a>
       </div>
     </div>
 
@@ -336,128 +306,38 @@ footer {
   </div>
 </nav>
 
-<header id="inicio">
+<header>
   <div class="hero-badge">Ferretería moderna • Comprá online</div>
   <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo">
   <h1>EL MAGO FERRETERO</h1>
   <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
 
   <div class="hero-actions">
-    <a class="btn" href="#herramientas">Ver herramientas</a>
+    <a class="btn" href="herramientas.html">Ver herramientas</a>
     <a class="btn btn-outline" href="#contacto">Contacto</a>
   </div>
 </header>
 
-<div class="section" id="herramientas">
-  <h2>Herramientas</h2>
-  <p class="section-text">Estas son herramientas de ejemplo. Después cargamos las reales con tus fotos, precios y stock.</p>
+<div class="section">
+  <h2>¿Por qué elegirnos?</h2>
+  <p class="section-text">Queremos que El Mago Ferretero sea una experiencia simple, clara y moderna para comprar productos de ferretería sin complicarte.</p>
 
-  <div class="products">
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Martillo</h3>
-      <p>Ideal para trabajos generales en casa o taller.</p>
-      <div class="price">$3500</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20martillo">Comprar</a>
+  <div class="info-grid">
+    <div class="info-box">
+      <h3>Compra simple</h3>
+      <p>Elegí tus productos, consultá rápido y avanzá con una experiencia fácil de entender.</p>
     </div>
 
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Llave francesa</h3>
-      <p>Ajustable y práctica para múltiples usos.</p>
-      <div class="price">$4200</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20francesa">Comprar</a>
+    <div class="info-box">
+      <h3>Atención directa</h3>
+      <p>Estamos para resolver dudas por WhatsApp y acompañarte en la compra.</p>
     </div>
 
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Destornillador plano</h3>
-      <p>Resistente y cómodo para uso diario.</p>
-      <div class="price">$1800</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20plano">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Destornillador Philips</h3>
-      <p>Ideal para tornillos cruzados y armado general.</p>
-      <div class="price">$1900</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20Philips">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Alicate universal</h3>
-      <p>Práctico para sujetar, doblar y cortar.</p>
-      <div class="price">$4800</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20alicate%20universal">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Pinza pico de loro</h3>
-      <p>Excelente para caños y ajustes más exigentes.</p>
-      <div class="price">$5600</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20pinza%20pico%20de%20loro">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Serrucho</h3>
-      <p>Para cortes manuales rápidos y precisos.</p>
-      <div class="price">$6100</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20serrucho">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Cinta métrica</h3>
-      <p>Medición confiable para cualquier trabajo.</p>
-      <div class="price">$2300</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20cinta%20métrica">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Nivel manual</h3>
-      <p>Ideal para instalaciones y trabajos de precisión.</p>
-      <div class="price">$3900</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20nivel%20manual">Comprar</a>
-    </div>
-
-    <div class="card">
-      <div class="card-tag">Herramientas</div>
-      <h3>Llave tubo</h3>
-      <p>Útil para ajustes en tuercas y piezas difíciles.</p>
-      <div class="price">$5100</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20tubo">Comprar</a>
+    <div class="info-box">
+      <h3>Pagos online</h3>
+      <p>Más adelante podemos integrar Mercado Pago y dejar el proceso listo para cobrar online.</p>
     </div>
   </div>
-</div>
-
-<div class="section" id="electricidad">
-  <h2>Electricidad</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de electricidad.</p>
-</div>
-
-<div class="section" id="plomeria">
-  <h2>Plomería</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de plomería.</p>
-</div>
-
-<div class="section" id="pintureria">
-  <h2>Pinturería</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de pinturería.</p>
-</div>
-
-<div class="section" id="tornilleria">
-  <h2>Tornillería</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de tornillería.</p>
-</div>
-
-<div class="section" id="jardin">
-  <h2>Jardín</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de jardín.</p>
 </div>
 
 <div class="section" id="contacto">
