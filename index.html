@@ -7,7 +7,6 @@
 
 <style>
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -16,6 +15,7 @@ body {
   color: white;
 }
 
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -55,6 +55,7 @@ body {
   color: #FF6A00;
 }
 
+/* DROPDOWN */
 .dropdown-container {
   position: relative;
 }
@@ -99,32 +100,23 @@ body {
   display: block;
 }
 
+/* HERO */
 header {
   background:
     radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
     radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
     linear-gradient(180deg, #121212 0%, #0B0B0B 100%);
   text-align: center;
-  padding: 72px 20px 92px;
+  padding: 80px 20px 100px;
 }
 
 .hero-logo {
-  width: 210px;
-  max-width: 72%;
+  width: 190px;
+  max-width: 70%;
+  display: block;
+  margin: 0 auto 28px auto;
   border-radius: 16px;
-  margin-bottom: 24px;
   box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-}
-
-.hero-badge {
-  display: inline-block;
-  background: rgba(255,106,0,0.12);
-  color: #ffb37a;
-  border: 1px solid rgba(255,106,0,0.28);
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  margin-bottom: 18px;
 }
 
 h1 {
@@ -148,6 +140,7 @@ h1 {
   flex-wrap: wrap;
 }
 
+/* BOTONES */
 .btn {
   padding: 12px 20px;
   background: #FF6A00;
@@ -170,6 +163,7 @@ h1 {
   color: white;
 }
 
+/* SECCIONES */
 .section {
   padding: 58px 20px;
   text-align: center;
@@ -186,6 +180,7 @@ h1 {
   margin: 0 auto 34px;
 }
 
+/* INFO BOXES */
 .info-grid {
   display: flex;
   gap: 20px;
@@ -214,6 +209,7 @@ h1 {
   line-height: 1.45;
 }
 
+/* WHATSAPP */
 .whatsapp-btn {
   position: fixed;
   bottom: 22px;
@@ -229,55 +225,13 @@ h1 {
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
+/* FOOTER */
 footer {
   border-top: 1px solid #202020;
   padding: 28px 20px 40px;
   text-align: center;
   color: #bcbcbc;
   font-size: 14px;
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 14px 16px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .logo {
-    font-size: 17px;
-  }
-
-  .menu {
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .menu a,
-  .dropdown-btn {
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 34px;
-  }
-
-  .hero-text {
-    font-size: 17px;
-  }
-
-  .hero-logo {
-    width: 170px;
-  }
-
-  .section h2 {
-    font-size: 28px;
-  }
-
-  .info-box {
-    width: 100%;
-    max-width: 320px;
-  }
 }
 </style>
 </head>
@@ -307,7 +261,6 @@ footer {
 </nav>
 
 <header>
-  <div class="hero-badge">Ferretería moderna • Comprá online</div>
   <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo">
   <h1>EL MAGO FERRETERO</h1>
   <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
@@ -320,37 +273,37 @@ footer {
 
 <div class="section">
   <h2>¿Por qué elegirnos?</h2>
-  <p class="section-text">Queremos que El Mago Ferretero sea una experiencia simple, clara y moderna para comprar productos de ferretería sin complicarte.</p>
+  <p class="section-text">Queremos que El Mago Ferretero sea una experiencia simple, clara y moderna para comprar productos de ferretería.</p>
 
   <div class="info-grid">
     <div class="info-box">
       <h3>Compra simple</h3>
-      <p>Elegí tus productos, consultá rápido y avanzá con una experiencia fácil de entender.</p>
+      <p>Elegí tus productos y comprá fácil.</p>
     </div>
 
     <div class="info-box">
       <h3>Atención directa</h3>
-      <p>Estamos para resolver dudas por WhatsApp y acompañarte en la compra.</p>
+      <p>Respondemos rápido por WhatsApp.</p>
     </div>
 
     <div class="info-box">
       <h3>Pagos online</h3>
-      <p>Más adelante podemos integrar Mercado Pago y dejar el proceso listo para cobrar online.</p>
+      <p>Próximamente con Mercado Pago.</p>
     </div>
   </div>
 </div>
 
 <div class="section" id="contacto">
   <h2>Contacto</h2>
-  <p class="section-text">Escribinos por WhatsApp para consultas, precios o pedidos.</p>
+  <p class="section-text">Escribinos por WhatsApp para consultas o pedidos.</p>
 </div>
 
 <footer>
-  El Mago Ferretero · Ferretería online con atención personalizada
+  El Mago Ferretero · Ferretería online
 </footer>
 
 <a href="https://wa.me/541127416948" class="whatsapp-btn">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WhatsApp">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30">
 </a>
 
 </body>
