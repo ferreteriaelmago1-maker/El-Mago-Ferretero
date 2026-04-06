@@ -241,35 +241,6 @@ h1 {
   text-align: center;
 }
 
-/* INFO BOXES */
-.info-grid {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.info-box {
-  width: 260px;
-  background: #151515;
-  border: 1px solid #242424;
-  border-radius: 16px;
-  padding: 22px;
-  text-align: left;
-}
-
-.info-box h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: #FF6A00;
-}
-
-.info-box p {
-  margin: 0;
-  color: #d0d0d0;
-  line-height: 1.45;
-}
-
 /* WHATSAPP */
 .whatsapp-btn {
   position: fixed;
@@ -337,11 +308,6 @@ footer {
     width: 100%;
     max-width: 320px;
   }
-
-  .info-box {
-    width: 100%;
-    max-width: 320px;
-  }
 }
 </style>
 </head>
@@ -377,37 +343,96 @@ footer {
   <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
 
   <div class="hero-actions">
-    <a class="btn" href="#productos">Ver productos</a>
-    <a class="btn btn-outline" href="#herramientas">Ir al catálogo</a>
+    <a class="btn" href="#herramientas">Ver herramientas</a>
+    <a class="btn btn-outline" href="#contacto">Contacto</a>
   </div>
 </header>
 
-<div class="section" id="productos">
-  <h2>Productos destacados</h2>
-  <p class="section-text">Estos son ejemplos iniciales. Después podemos cargar los productos reales por rubro, con fotos, precios, stock y promociones.</p>
+<div class="section" id="herramientas">
+  <h2>Herramientas</h2>
+  <p class="section-text">Estas son herramientas de ejemplo. Después cargamos las reales con tus fotos, precios y stock.</p>
 
   <div class="products">
     <div class="card">
       <div class="card-tag">Herramientas</div>
-      <h3>Llave ajustable</h3>
-      <p>Ideal para ajustes rápidos y trabajos generales.</p>
-      <div class="price">$1000</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20comprar%20la%20llave%20ajustable">Comprar</a>
+      <h3>Martillo</h3>
+      <p>Ideal para trabajos generales en casa o taller.</p>
+      <div class="price">$3500</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20martillo">Comprar</a>
     </div>
 
     <div class="card">
       <div class="card-tag">Herramientas</div>
-      <h3>Destornillador</h3>
-      <p>Práctico, resistente y listo para el uso diario.</p>
-      <div class="price">$2000</div>
-      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20comprar%20el%20destornillador">Comprar</a>
+      <h3>Llave francesa</h3>
+      <p>Ajustable y práctica para múltiples usos.</p>
+      <div class="price">$4200</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20francesa">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Destornillador plano</h3>
+      <p>Resistente y cómodo para uso diario.</p>
+      <div class="price">$1800</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20plano">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Destornillador Philips</h3>
+      <p>Ideal para tornillos cruzados y armado general.</p>
+      <div class="price">$1900</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20Philips">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Alicate universal</h3>
+      <p>Práctico para sujetar, doblar y cortar.</p>
+      <div class="price">$4800</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20alicate%20universal">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Pinza pico de loro</h3>
+      <p>Excelente para caños y ajustes más exigentes.</p>
+      <div class="price">$5600</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20pinza%20pico%20de%20loro">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Serrucho</h3>
+      <p>Para cortes manuales rápidos y precisos.</p>
+      <div class="price">$6100</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20serrucho">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Cinta métrica</h3>
+      <p>Medición confiable para cualquier trabajo.</p>
+      <div class="price">$2300</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20cinta%20métrica">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Nivel manual</h3>
+      <p>Ideal para instalaciones y trabajos de precisión.</p>
+      <div class="price">$3900</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20nivel%20manual">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Llave tubo</h3>
+      <p>Útil para ajustes en tuercas y piezas difíciles.</p>
+      <div class="price">$5100</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20tubo">Comprar</a>
     </div>
   </div>
-</div>
-
-<div class="section" id="herramientas">
-  <h2>Herramientas</h2>
-  <p class="section-text">Próximamente vas a ver acá todos los productos de herramientas.</p>
 </div>
 
 <div class="section" id="electricidad">
