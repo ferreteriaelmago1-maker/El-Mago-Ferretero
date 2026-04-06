@@ -7,109 +7,136 @@
 
 <style>
 body {
-  margin:0;
-  font-family:Arial;
-  background:#0B0B0B;
-  color:white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0B0B0B;
+  color: white;
 }
 
 /* NAVBAR */
 .navbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 30px;
-  background:#0B0B0B;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  border-bottom:1px solid #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #0B0B0B;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #222;
 }
 
 .logo {
-  color:#FF6A00;
-  font-weight:bold;
+  color: #FF6A00;
+  font-weight: bold;
 }
 
 .menu {
-  display:flex;
-  gap:25px;
-  align-items:center;
+  display: flex;
+  gap: 25px;
+  align-items: center;
 }
 
 .menu a {
-  color:white;
-  text-decoration:none;
+  color: white;
+  text-decoration: none;
 }
 
 .menu a:hover {
-  color:#FF6A00;
+  color: #FF6A00;
 }
 
 /* DROPDOWN */
 .dropdown-container {
-  position:relative;
+  position: relative;
 }
 
 .dropdown {
-  display:none;
-  position:absolute;
-  top:30px;
-  left:0;
-  background:#111;
-  border-radius:10px;
-  min-width:200px;
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: #111;
+  border-radius: 10px;
+  min-width: 220px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  overflow: hidden;
 }
 
 .dropdown a {
-  display:block;
-  padding:12px;
+  display: block;
+  padding: 12px 16px;
 }
 
 .dropdown a:hover {
-  background:#FF6A00;
+  background: #FF6A00;
 }
 
 .dropdown-container:hover .dropdown {
-  display:block;
+  display: block;
 }
 
-/* HEADER */
+/* HERO */
 header {
-  background:url('logo.jpg') center/150% no-repeat;
-  padding:160px 20px;
-  text-align:center;
+  background: linear-gradient(180deg, #111 0%, #0B0B0B 100%);
+  padding: 70px 20px 90px;
+  text-align: center;
+}
+
+.hero-logo {
+  width: 320px;
+  max-width: 85%;
+  margin-bottom: 25px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+h1 {
+  color: #FF6A00;
+  margin: 0 0 10px;
+  font-size: 46px;
+}
+
+.hero-text {
+  font-size: 20px;
+  color: #ddd;
+  margin: 0;
 }
 
 /* BOTONES */
 .btn {
-  padding:10px 20px;
-  background:#FF6A00;
-  color:white;
-  text-decoration:none;
-  margin:5px;
-  display:inline-block;
-  border-radius:8px;
+  padding: 10px 20px;
+  background: #FF6A00;
+  color: white;
+  text-decoration: none;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 8px;
 }
 
 /* PRODUCTOS */
 .section {
-  padding:40px;
-  text-align:center;
+  padding: 50px 20px;
+  text-align: center;
 }
 
 .products {
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  flex-wrap:wrap;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .card {
-  background:#1a1a1a;
-  padding:20px;
-  width:200px;
-  border-radius:10px;
+  background: #1a1a1a;
+  padding: 20px;
+  width: 220px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.card h3 {
+  margin-top: 0;
 }
 
 /* WHATSAPP */
@@ -127,12 +154,33 @@ header {
   text-decoration: none;
   box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .menu {
+    gap: 14px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .hero-text {
+    font-size: 17px;
+  }
+
+  .hero-logo {
+    width: 240px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">🧙 El Mago Ferretero</div>
 
@@ -155,13 +203,12 @@ header {
   </div>
 </nav>
 
-<!-- PORTADA -->
 <header>
-  <h1 style="color:#FF6A00;">EL MAGO FERRETERO</h1>
-  <p>Todo lo que necesitás en ferretería</p>
+  <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo">
+  <h1>EL MAGO FERRETERO</h1>
+  <p class="hero-text">Todo lo que necesitás en ferretería</p>
 </header>
 
-<!-- PRODUCTOS -->
 <div class="section">
   <h2>Productos destacados</h2>
 
@@ -180,9 +227,8 @@ header {
   </div>
 </div>
 
-<!-- BOTÓN WHATSAPP -->
 <a href="https://wa.me/541127416948" class="whatsapp-btn">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WhatsApp">
 </a>
 
 </body>
