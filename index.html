@@ -19,69 +19,39 @@
 
     .navbar {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      gap: 20px;
-      padding: 14px 24px;
+      padding: 16px 24px;
       background: rgba(11,11,11,0.97);
       position: sticky;
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid #1f1f1f;
+      gap: 28px;
       flex-wrap: wrap;
     }
 
-    .nav-left, .nav-center, .nav-right {
+    .menu-centered {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .logo {
-      color: #ff6a00;
-      font-weight: bold;
-      font-size: 20px;
-      white-space: nowrap;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #171717;
-      border: 1px solid #2a2a2a;
-      border-radius: 10px;
-      padding: 8px 12px;
-      min-width: 280px;
-    }
-
-    .search-box input {
-      background: transparent;
-      border: none;
-      outline: none;
+    .menu-centered a,
+    .dropdown-btn {
       color: white;
-      width: 100%;
-      font-size: 14px;
-    }
-
-    .search-box input::placeholder {
-      color: #8f8f8f;
-    }
-
-    .menu {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .menu a, .dropdown-btn {
-      color: white;
-      font-size: 15px;
+      font-size: 16px;
       background: none;
       border: none;
       cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    .menu a:hover, .dropdown-btn:hover {
+    .menu-centered a:hover,
+    .dropdown-btn:hover {
       color: #ff6a00;
     }
 
@@ -100,6 +70,7 @@
       min-width: 230px;
       box-shadow: 0 14px 30px rgba(0,0,0,0.45);
       overflow: hidden;
+      z-index: 1001;
     }
 
     .dropdown a {
@@ -121,33 +92,6 @@
     .dropdown-container:hover .dropdown,
     .dropdown-container:focus-within .dropdown {
       display: block;
-    }
-
-    .cart-button {
-      position: relative;
-      background: #ff6a00;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #25d366;
-      color: white;
-      border-radius: 999px;
-      min-width: 22px;
-      height: 22px;
-      padding: 0 6px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     header {
@@ -198,6 +142,37 @@
       margin: 0 auto 34px;
     }
 
+    .search-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #171717;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-width: 320px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: #8f8f8f;
+    }
+
     .products {
       display: flex;
       gap: 22px;
@@ -236,11 +211,6 @@
       margin: 12px 0 18px;
     }
 
-    .card .btn {
-      width: 100%;
-      text-align: center;
-    }
-
     .btn {
       padding: 12px 20px;
       background: #ff6a00;
@@ -250,8 +220,49 @@
       font-weight: bold;
       border: none;
       cursor: pointer;
+      text-align: center;
     }
 
+    .card .btn {
+      width: 100%;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .cart-button {
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #25d366;
+      color: white;
+      border-radius: 999px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-box,
     .shipping-box {
       max-width: 760px;
       margin: 0 auto;
@@ -260,6 +271,12 @@
       border-radius: 16px;
       padding: 24px;
       text-align: left;
+    }
+
+    .contact-item {
+      margin-bottom: 16px;
+      color: #d0d0d0;
+      line-height: 1.5;
     }
 
     .shipping-grid {
@@ -285,22 +302,6 @@
       font-weight: bold;
     }
 
-    .contact-box {
-      max-width: 760px;
-      margin: 0 auto;
-      background: #151515;
-      border: 1px solid #242424;
-      border-radius: 16px;
-      padding: 24px;
-      text-align: left;
-    }
-
-    .contact-item {
-      margin-bottom: 16px;
-      color: #d0d0d0;
-      line-height: 1.5;
-    }
-
     .whatsapp-btn {
       position: fixed;
       bottom: 22px;
@@ -314,14 +315,6 @@
       justify-content: center;
       box-shadow: 0 10px 24px rgba(0,0,0,0.35);
       z-index: 1100;
-    }
-
-    footer {
-      border-top: 1px solid #202020;
-      padding: 28px 20px 40px;
-      text-align: center;
-      color: #bcbcbc;
-      font-size: 14px;
     }
 
     .cart-drawer {
@@ -435,80 +428,45 @@
       line-height: 1.45;
     }
 
+    footer {
+      border-top: 1px solid #202020;
+      padding: 28px 20px 40px;
+      text-align: center;
+      color: #bcbcbc;
+      font-size: 14px;
+    }
+
     @media (max-width: 900px) {
-      .navbar {
-        padding: 14px 16px;
-      }
-
-      .nav-left, .nav-center, .nav-right {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .search-box {
-        min-width: 100%;
-      }
-
-      .menu {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      h1 {
-        font-size: 36px;
-      }
-
-      .hero-text {
-        font-size: 17px;
-      }
-
-      .shipping-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        width: 100%;
-        max-width: 320px;
-      }
+      h1 { font-size: 36px; }
+      .hero-text { font-size: 17px; }
+      .shipping-grid { grid-template-columns: 1fr; }
+      .card { width: 100%; max-width: 320px; }
+      .search-box { min-width: 100%; }
+      .menu-centered { gap: 16px; }
     }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="nav-left">
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar productos..." />
-      </div>
-    </div>
+    <div class="menu-centered">
+      <a href="index.html">Inicio</a>
 
-    <div class="nav-center">
-      <div class="logo">🧙 El Mago Ferretero</div>
-
-      <div class="menu">
-        <a href="index.html">Inicio</a>
-
-        <div class="dropdown-container">
-          <a href="catalogo.html" class="dropdown-btn">Catálogo ▼</a>
-          <div class="dropdown">
-            <a href="herramientas.html">Herramientas</a>
-            <a href="electricidad.html">Electricidad</a>
-            <a href="plomeria.html">Plomería</a>
-            <a href="pintureria.html">Pinturería</a>
-            <a href="tornilleria.html">Tornillería</a>
-            <a href="jardin.html">Jardín</a>
-          </div>
+      <div class="dropdown-container">
+        <a href="catalogo.html" class="dropdown-btn">Catálogo ▼</a>
+        <div class="dropdown">
+          <a href="herramientas.html">Herramientas</a>
+          <a href="electricidad.html">Electricidad</a>
+          <a href="plomeria.html">Plomería</a>
+          <a href="pintureria.html">Pinturería</a>
+          <a href="tornilleria.html">Tornillería</a>
+          <a href="jardin.html">Jardín</a>
         </div>
-
-        <a href="#contacto">Contacto</a>
       </div>
-    </div>
 
-    <div class="nav-right">
-      <button class="cart-button" id="openCartBtn">
-        🛒 Carrito
-        <span class="cart-count" id="cartCount">0</span>
-      </button>
+      <a href="contacto.html">Contacto</a>
+      <a href="login.html">Ingresar</a>
+      <a href="registro.html">Registrarse</a>
     </div>
   </nav>
 
@@ -516,6 +474,17 @@
     <img src="logo.jpg" alt="Logo El Mago Ferretero" class="hero-logo" />
     <h1>EL MAGO FERRETERO</h1>
     <p class="hero-text">Todo lo que necesitás en ferretería, con atención rápida, compra simple y la posibilidad de consultarnos directo por WhatsApp.</p>
+
+    <div class="top-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar productos destacados..." />
+      </div>
+
+      <button class="cart-button" id="openCartBtn">
+        🛒 Carrito
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
   </header>
 
   <div class="section" id="productos">
