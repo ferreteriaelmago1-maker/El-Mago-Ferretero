@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herramientas | El Mago Ferretero</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0B0B0B;
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: rgba(11,11,11,0.97);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.logo {
+  color: #FF6A00;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.menu a,
+.dropdown-btn {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu a:hover,
+.dropdown-btn:hover {
+  color: #FF6A00;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-btn {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #141414;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  min-width: 230px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+.dropdown a {
+  display: block;
+  padding: 13px 16px;
+  border-bottom: 1px solid #222;
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown a:last-child {
+  border-bottom: none;
+}
+
+.dropdown a:hover {
+  background: #FF6A00;
+  color: white;
+}
+
+.dropdown-container:hover .dropdown,
+.dropdown-container:focus-within .dropdown {
+  display: block;
+}
+
+.page-header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background:
+    radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
+    radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
+    linear-gradient(180deg, #121212 0%, #0B0B0B 100%);
+}
+
+.page-header h1 {
+  margin: 0 0 10px;
+  color: #FF6A00;
+  font-size: 42px;
+}
+
+.page-header p {
+  color: #d7d7d7;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 50px 20px;
+}
+
+.products {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
+  padding: 22px;
+  width: 240px;
+  border-radius: 16px;
+  border: 1px solid #232323;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+  text-align: left;
+}
+
+.card-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(91,33,182,0.18);
+  color: #c9b0ff;
+  margin-bottom: 14px;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  color: #FF6A00;
+  margin: 12px 0 18px;
+}
+
+.btn {
+  padding: 12px 20px;
+  background: #FF6A00;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  display: inline-block;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.whatsapp-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  background: #25D366;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+
+footer {
+  border-top: 1px solid #202020;
+  padding: 28px 20px 40px;
+  text-align: center;
+  color: #bcbcbc;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .menu {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="logo">🧙 El Mago Ferretero</div>
+
+  <div class="menu">
+    <a href="index.html">Inicio</a>
+
+    <div class="dropdown-container">
+      <button class="dropdown-btn">Catálogo ▼</button>
+      <div class="dropdown">
+        <a href="herramientas.html">Herramientas</a>
+        <a href="#">Electricidad</a>
+        <a href="#">Plomería</a>
+        <a href="#">Pinturería</a>
+        <a href="#">Tornillería</a>
+        <a href="#">Jardín</a>
+      </div>
+    </div>
+
+    <a href="index.html#contacto">Contacto</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Herramientas</h1>
+  <p>Estas son herramientas de ejemplo. Después cargamos las reales con tus fotos, precios y stock.</p>
+</div>
+
+<div class="section">
+  <div class="products">
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Martillo</h3>
+      <p>Ideal para trabajos generales en casa o taller.</p>
+      <div class="price">$3500</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20martillo">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Llave francesa</h3>
+      <p>Ajustable y práctica para múltiples usos.</p>
+      <div class="price">$4200</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20francesa">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Destornillador plano</h3>
+      <p>Resistente y cómodo para uso diario.</p>
+      <div class="price">$1800</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20plano">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Destornillador Philips</h3>
+      <p>Ideal para tornillos cruzados y armado general.</p>
+      <div class="price">$1900</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20destornillador%20Philips">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Alicate universal</h3>
+      <p>Práctico para sujetar, doblar y cortar.</p>
+      <div class="price">$4800</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20alicate%20universal">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Pinza pico de loro</h3>
+      <p>Excelente para caños y ajustes más exigentes.</p>
+      <div class="price">$5600</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20pinza%20pico%20de%20loro">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Serrucho</h3>
+      <p>Para cortes manuales rápidos y precisos.</p>
+      <div class="price">$6100</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20serrucho">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Cinta métrica</h3>
+      <p>Medición confiable para cualquier trabajo.</p>
+      <div class="price">$2300</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20cinta%20métrica">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Nivel manual</h3>
+      <p>Ideal para instalaciones y trabajos de precisión.</p>
+      <div class="price">$3900</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20el%20nivel%20manual">Comprar</a>
+    </div>
+
+    <div class="card">
+      <div class="card-tag">Herramientas</div>
+      <h3>Llave tubo</h3>
+      <p>Útil para ajustes en tuercas y piezas difíciles.</p>
+      <div class="price">$5100</div>
+      <a class="btn" href="https://wa.me/541127416948?text=Hola,%20quiero%20consultar%20por%20la%20llave%20tubo">Comprar</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  El Mago Ferretero · Herramientas
+</footer>
+
+<a href="https://wa.me/541127416948" class="whatsapp-btn">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="30" alt="WhatsApp">
+</a>
+
+</body>
+</html>
