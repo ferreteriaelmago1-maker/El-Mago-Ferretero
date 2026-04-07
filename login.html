@@ -1,47 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Iniciar sesión</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<título>Iniciar sesión | El Mago Ferretero</title>
+<style>
+cuerpo {
+margen: 0;
+familia de fuentes: Arial, sans-serif;
+fondo: #0b0b0b;
+color: blanco;
+pantalla: flexible;
+alinear-elementos: centro;
+justificar-contenido: centro;
+altura mínima: 100vh;
+}
+.tarjeta {
+ancho: 100%;
+ancho máximo: 420px;
+fondo: #151515;
+borde: 1px sólido #242424;
+radio de borde: 16px;
+relleno: 28px;
+}
+h1 { color: #ff6a00; margin-top: 0; text-align: center; }
+aporte {
+ancho: 100%;
+relleno: 12px;
+margen inferior: 14px;
+fondo: #101010;
+borde: 1px sólido #2b2b2b;
+radio de borde: 10px;
+color: blanco;
+esquema: ninguno;
+}
+botón {
+ancho: 100%;
+relleno: 12px;
+fondo: #ff6a00;
+color: blanco;
+borde: ninguno;
+radio de borde: 10px;
+grosor de fuente: negrita;
+cursor: puntero;
+}
+#mensaje {
+margen superior: 16px;
+interlineado: 1,45;
+espacio en blanco: preenvoltura;
+}
+a { color: #ff6a00; text-decoration: none; }
+</style>
 </head>
-<body style="background:#0b0b0b;color:white;font-family:Arial;text-align:center;padding-top:100px;">
-
+<cuerpo>
+<div class="card">
 <h1>Ingresar</h1>
 
-<input id="email" placeholder="Correo electrónico" style="padding:10px;margin:10px;"><br>
-<input id="password" type="password" placeholder="Contraseña" style="padding:10px;margin:10px;"><br>
+<input id="email" type="email" placeholder="Tu correo electrónico" />
+<input id="password" type="password" placeholder="Tu contraseña" />
 
-<button onclick="login()" style="padding:10px 20px;background:#ff6a00;color:white;border:none;">
-Ingresar
-</button>
+<button id="btnLogin" type="button">Ingresar</button>
 
-<p id="mensaje"></p>
+<div id="mensaje"></div>
 
-<script src=" https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+<p style="margin-top:16px; text-align:center;">
+¿No tienes cuenta? <a href="registro.html">Registrarse</a>
+</p>
+</div>
 
-<script>
-const supabase = window.supabase.createClient(
-" https://vgfkluhqxngqoginpdmg.supabase.co ",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8"
+<script type="module">
+import { createClient } from ' https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm ';
+
+const supabase = createClient(
+' https://vgfkluhqxngqoginpdmg.supabase.co ',
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8'
 );
 
-función asíncrona login() {
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+const btn = document.getElementById('btnLogin');
+const mensaje = document.getElementById('mensaje');
 
-const { error } = await supabase.auth.signInWithPassword({
-correo electrónico: correo electrónico,
-contraseña: contraseña
+btn.addEventListener('click', async () => {
+const email = document.getElementById('email').value.trim();
+const password = document.getElementById('password').value;
+
+mensaje.textContent = 'Procesando...';
+
+si (!correo electrónico || !contraseña) {
+mensaje.textContent = 'Completá email y contraseña.';
+devolver;
+}
+
+const { data, error } = await supabase.auth.signInWithPassword({
+correo electrónico,
+contraseña
 });
 
-si (error) {
-document.getElementById("mensaje").innerText = error.message;
-} demás {
-document.getElementById("mensaje").innerText = "✅ Iniciar sesión correctamente";
-window.location.href = "index.html";
-}
-}
-</script>
+console.log('DATOS DE INICIO DE SESIÓN:', datos);
+console.log('ERROR DE INICIO DE SESIÓN:', error);
 
+si (error) {
+mensaje.textContent = 'Error: ' + error.message;
+devolver;
+}
+
+mensaje.textContent = ' ✅ Iniciar sesión correctamente. Redirigir...';
+setTimeout(() => {
+window.location.href = 'index.html';
+}, 1000);
+});
+</script>
 </body>
 </html>
