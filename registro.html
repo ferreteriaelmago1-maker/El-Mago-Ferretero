@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registro</title>
 <style>
 cuerpo {
@@ -60,26 +60,27 @@ color: #ddd;
 <div class="card">
 <h1>Crear cuenta</h1>
 
-<input id="email" type="email" placeholder="Tu correo electrónico" />
-<input id="password" type="password" placeholder="Tu contraseña" />
+<input id="email" type="email" placeholder="Tu correo electrónico">
+<input id="password" type="password" placeholder="Tu contraseña">
 
 <button id="btnRegistro" type="button">Registrarme</button>
 
 <div id="mensaje">Página cargada.</div>
 </div>
 
-<script type="module">
-import { createClient } from ' https://esm.sh/@supabase/supabase-js@2 ';
-
+<script src=" https://unpkg.com/@supabase/supabase-js@2 "></script>
+<script>
 const mensaje = document.getElementById('mensaje');
-mensaje.textContent = 'JavaScript cargó bien.';
 
-const supabase = createClient(
+intentar {
+const supabase = window.supabase.createClient(
 ' https://vgfkluhqxngqoginpdmg.supabase.co ',
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8'
 );
 
-document.getElementById('btnRegistro').addEventListener('click', async () => {
+mensaje.textContent = 'JavaScript cargó bien.';
+
+document.getElementById('btnRegistro').addEventListener('click', async function () {
 const email = document.getElementById('email').value.trim();
 const password = document.getElementById('password').value;
 
@@ -90,10 +91,9 @@ devolver;
 
 mensaje.textContent = 'Intentando registrar...';
 
-intentar {
 const { data, error } = await supabase.auth.signUp({
-correo electrónico,
-contraseña
+correo electrónico: correo electrónico,
+contraseña: contraseña
 });
 
 si (error) {
@@ -101,14 +101,12 @@ mensaje.textContent = 'Error: ' + error.message;
 devolver;
 }
 
-mensaje.textContent =
-'✅ Registro enviado correctamente.\n' +
-'Revisar Supabase > Autenticación > Usuarios.\n' +
-'Si está activada la confirmación de correo electrónico, revisá también tu correo.';
-} capturar (e) {
-mensaje.textContent = 'Error inesperado: ' + e.message;
-}
+mensaje.textContent = ' ✅ Registro enviado correctamente. Revisar Supabase > Autenticación > Usuarios.';
+console.log(datos);
 });
+} capturar (e) {
+mensaje.textContent = 'Error al cargar JavaScript: ' + e.message;
+}
 </script>
 </body>
 </html>
