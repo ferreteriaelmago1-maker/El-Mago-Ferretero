@@ -1,141 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ingresar | El Mago Ferretero</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: white;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px 24px;
-      background: rgba(11,11,11,0.97);
-      border-bottom: 1px solid #1f1f1f;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .navbar a:hover {
-      color: #ff6a00;
-    }
-
-    .page {
-      min-height: calc(100vh - 70px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 20px;
-      background:
-        radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
-        radial-gradient(circle at top right, rgba(255,106,0,0.18), transparent 24%),
-        linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: #151515;
-      border: 1px solid #242424;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.22);
-    }
-
-    h1 {
-      margin-top: 0;
-      color: #ff6a00;
-      text-align: center;
-    }
-
-    p {
-      color: #d0d0d0;
-      text-align: center;
-      margin-bottom: 22px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 16px;
-      background: #101010;
-      border: 1px solid #2b2b2b;
-      border-radius: 10px;
-      color: white;
-      outline: none;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #ff6a00;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .link {
-      margin-top: 16px;
-      text-align: center;
-    }
-
-    .link a {
-      color: #ff6a00;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Registro</title>
 </head>
-<body>
+<body style="background:#0b0b0b;color:white;font-family:Arial;text-align:center;padding-top:100px;">
 
-  <nav class="navbar">
-    <a href="index.html">Inicio</a>
-    <a href="catalogo.html">Catálogo</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="login.html">Ingresar</a>
-    <a href="registro.html">Registrarse</a>
-  </nav>
+<h1>Crear cuenta</h1>
 
-  <div class="page">
-    <div class="card">
-      <h1>Ingresar</h1>
-      <p>Entrá con tu cuenta para ver tus pedidos y beneficios.</p>
+<input id="email" placeholder="Correo electrónico" style="padding:10px;margin:10px;"><br>
+<input id="password" type="password" placeholder="Contraseña" style="padding:10px;margin:10px;"><br>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Tu email" />
+<button onclick="registrar()" style="padding:10px 20px;background:#ff6a00;color:white;border:none;">
+Registrarme
+</button>
 
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" placeholder="Tu contraseña" />
+<p id="mensaje"></p>
 
-      <button class="btn">Ingresar</button>
+<!-- SUPABASE -->
+<script src=" https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
 
-      <div class="link">
-        ¿No tenés cuenta? <a href="registro.html">Registrate</a>
-      </div>
-    </div>
-  </div>
+<script>
+const supabase = window.supabase.createClient(
+" https://vgfkluhqxngqoginpdmg.supabase.co ",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8"
+);
+
+función asíncrona registrar() {
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+const { error } = await supabase.auth.signUp({
+correo electrónico: correo electrónico,
+contraseña: contraseña
+});
+
+si (error) {
+document.getElementById("mensaje").innerText = error.message;
+} demás {
+document.getElementById("mensaje").innerText = "✅ Usuario creado correctamente";
+}
+}
+</script>
 
 </body>
 </html>
