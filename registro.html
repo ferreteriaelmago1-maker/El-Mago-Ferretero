@@ -68,12 +68,13 @@ color: #ddd;
 <div id="mensaje">Página cargada.</div>
 </div>
 
-<script src=" https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
-<script>
+<script type="module">
+import { createClient } from ' https://esm.sh/@supabase/supabase-js@2 ';
+
 const mensaje = document.getElementById('mensaje');
 mensaje.textContent = 'JavaScript cargó bien.';
 
-const supabase = window.supabase.createClient(
+const supabase = createClient(
 ' https://vgfkluhqxngqoginpdmg.supabase.co ',
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8'
 );
