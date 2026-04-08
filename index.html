@@ -925,13 +925,41 @@
       }
     });
 
-    mercadoPagoBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Agregá productos al carrito antes de pagar.');
-        return;
-      }
-      alert('Botón de Mercado Pago en modo demo. Para activarlo de verdad hay que conectar tu cuenta de Mercado Pago.');
-    });
+    mercadoPagoBtn.addEventListener('click', async () => {
+if (cart.length === 0) {
+alert('Agregá productos antes de pagar');
+return;
+}
+
+const items = cart.map(item => ({
+title: item.name,
+quantity: item.qty,
+unit_price: item.price
+}));
+
+try {
+const res = await fetch("https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/crear-preferencia", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({ items })
+});
+
+const data = await res.json();
+
+if (data.init_point) {
+window.location.href = data.init_point;
+} else {
+alert("Error al crear pago");
+console.log(data);
+}
+
+} catch (error) {
+console.error(error);
+alert("Error conectando con Mercado Pago");
+}
+});
 
     calcShippingBtn.addEventListener('click', () => {
       const zoneCost = Number(shippingZone.value);
