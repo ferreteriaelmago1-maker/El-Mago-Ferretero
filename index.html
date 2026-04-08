@@ -652,7 +652,7 @@ El Mago Ferretero · Ferretería online
 <button class="btn" id="checkoutBtn" style="width:100%; margin-bottom:10px;">Finalizar compra</button>
 <button class="btn" id="mercadoPagoBtn" style="width:100%;">Pagar con Mercado Pago</button>
 <div class="checkout-note">
-Mercado Pago está conectado en prueba. Si falla, revisamos la función de Supabase.
+Mercado Pago está conectado a la función de Supabase.
 </div>
 </div>
 </div>
@@ -941,20 +941,6 @@ headers: {
 "Content-Type": "application/json"
 },
 body: JSON.stringify({ items })
-});
-
-const data = await res.json();
-console.log("RESPUESTA MP:", data);
-
-if (data.init_point) {
-window.location.href = data.init_point;
-} else {
-alert("Error al crear pago: " + JSON.stringify(data));
-}
-} catch (error) {
-console.error("ERROR FETCH:", error);
-alert("Error conectando con Mercado Pago: " + error.message);
-}
 });
 
 const data = await res.json();
