@@ -18,17 +18,16 @@
     a { text-decoration: none; }
 
     .navbar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px 24px;
-      background: rgba(11,11,11,0.97);
       position: sticky;
       top: 0;
       z-index: 1000;
+      background: rgba(11,11,11,0.97);
       border-bottom: 1px solid #1f1f1f;
-      gap: 28px;
-      flex-wrap: wrap;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
     }
 
     .menu-centered {
@@ -94,6 +93,52 @@
       display: block;
     }
 
+    .user-box {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-name {
+      color: #d7d7d7;
+      font-size: 14px;
+      display: none;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ff6a00;
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 8px 18px rgba(255,106,0,0.25);
+    }
+
+    .logout-btn {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      border-color: #ff6a00;
+      color: #ff6a00;
+    }
+
     header {
       background:
         radial-gradient(circle at top left, rgba(91,33,182,0.25), transparent 28%),
@@ -142,10 +187,12 @@
       margin: 0 auto 34px;
     }
 
-    .search-wrap {
+    .top-actions {
       display: flex;
       justify-content: center;
-      margin-bottom: 24px;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
     }
 
     .search-box {
@@ -171,6 +218,33 @@
 
     .search-box input::placeholder {
       color: #8f8f8f;
+    }
+
+    .cart-button {
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #25d366;
+      color: white;
+      border-radius: 999px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .products {
@@ -225,41 +299,6 @@
 
     .card .btn {
       width: 100%;
-    }
-
-    .top-actions {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .cart-button {
-      background: #ff6a00;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-weight: bold;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #25d366;
-      color: white;
-      border-radius: 999px;
-      min-width: 22px;
-      height: 22px;
-      padding: 0 6px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .contact-box,
@@ -443,6 +482,18 @@
       .card { width: 100%; max-width: 320px; }
       .search-box { min-width: 100%; }
       .menu-centered { gap: 16px; }
+      .user-box {
+        position: static;
+        transform: none;
+        margin-left: 0;
+        margin-top: 10px;
+        justify-content: center;
+        width: 100%;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -465,8 +516,14 @@
       </div>
 
       <a href="contacto.html">Contacto</a>
-      <a href="login.html">Ingresar</a>
-      <a href="registro.html">Registrarse</a>
+      <a href="login.html" id="loginLink">Ingresar</a>
+      <a href="registro.html" id="registroLink">Registrarse</a>
+    </div>
+
+    <div class="user-box" id="userBox">
+      <span class="user-name" id="userName"></span>
+      <div class="avatar" id="avatar"></div>
+      <button class="logout-btn" id="logoutBtn">Salir</button>
     </div>
   </nav>
 
@@ -598,7 +655,12 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const supabaseUrl = "https://vgfkluhqxngqoginpdmg.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
+    const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     const cart = [];
     const cartDrawer = document.getElementById('cartDrawer');
     const openCartBtn = document.getElementById('openCartBtn');
@@ -615,6 +677,12 @@
     const shippingItems = document.getElementById('shippingItems');
     const calcShippingBtn = document.getElementById('calcShippingBtn');
     const shippingResult = document.getElementById('shippingResult');
+
+    const loginLink = document.getElementById('loginLink');
+    const registroLink = document.getElementById('registroLink');
+    const userName = document.getElementById('userName');
+    const avatar = document.getElementById('avatar');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     function formatPrice(value) {
       return '$' + value.toLocaleString('es-AR');
@@ -681,6 +749,53 @@
       updateCart();
     }
 
+    function getInitials(nombre, apellido) {
+      const n = nombre ? nombre.trim().charAt(0).toUpperCase() : '';
+      const a = apellido ? apellido.trim().charAt(0).toUpperCase() : '';
+      return (n + a) || 'US';
+    }
+
+    async function cargarUsuarioArriba() {
+      const { data: { session } } = await client.auth.getSession();
+
+      if (!session || !session.user) {
+        loginLink.style.display = 'inline-block';
+        registroLink.style.display = 'inline-block';
+        userName.style.display = 'none';
+        avatar.style.display = 'none';
+        logoutBtn.style.display = 'none';
+        return;
+      }
+
+      loginLink.style.display = 'none';
+      registroLink.style.display = 'none';
+
+      const userId = session.user.id;
+
+      const { data, error } = await client
+        .from('profiles')
+        .select('nombre, apellido')
+        .eq('id', userId)
+        .single();
+
+      if (error || !data) {
+        userName.textContent = 'Mi cuenta';
+        avatar.textContent = 'US';
+      } else {
+        userName.textContent = 'Hola, ' + data.nombre;
+        avatar.textContent = getInitials(data.nombre, data.apellido);
+      }
+
+      userName.style.display = 'inline-block';
+      avatar.style.display = 'flex';
+      logoutBtn.style.display = 'inline-block';
+    }
+
+    logoutBtn.addEventListener('click', async () => {
+      await client.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
     window.changeQty = changeQty;
     window.removeItem = removeItem;
 
@@ -736,6 +851,7 @@
     });
 
     updateCart();
+    cargarUsuarioArriba();
   </script>
 </body>
 </html>
