@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro</title>
+  <title>Login</title>
   <style>
     body {
       margin: 0;
@@ -54,23 +54,35 @@
       padding: 12px;
       min-height: 70px;
     }
+    .link {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .link a {
+      color: #ff6a00;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Crear cuenta</h1>
+    <h1>Ingresar</h1>
 
     <input id="email" type="email" placeholder="Tu email">
     <input id="password" type="password" placeholder="Tu contraseña">
 
-    <button id="btnRegistro" type="button">Registrarme</button>
+    <button id="btnLogin" type="button">Ingresar</button>
 
-    <div id="mensaje">Cargando script...</div>
+    <div id="mensaje">Cargando script de login...</div>
+
+    <div class="link">
+      ¿No tenés cuenta? <a href="registro.html">Registrate</a>
+    </div>
   </div>
 
   <script>
     const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = '✅ JavaScript cargó bien. Ahora cargando Supabase...';
+    mensaje.textContent = '✅ JavaScript cargó bien. Ahora cargando Supabase para login...';
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -80,16 +92,16 @@
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
 
     if (!window.supabase) {
-      mensaje.textContent = "❌ No cargó la librería de Supabase. Puede ser caché o que el archivo publicado no es el nuevo.";
+      mensaje.textContent = "❌ No cargó la librería de Supabase.";
     } else {
-      mensaje.textContent = "✅ Supabase cargó bien. Probá registrarte.";
+      mensaje.textContent = "✅ Supabase cargó bien. Probá iniciar sesión.";
       const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-      document.getElementById('btnRegistro').addEventListener('click', async function () {
+      document.getElementById('btnLogin').addEventListener('click', async function () {
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
 
-        mensaje.textContent = "Procesando registro...";
+        mensaje.textContent = "Procesando login...";
 
         if (!email || !password) {
           mensaje.textContent = "❌ Completá email y contraseña.";
@@ -97,7 +109,7 @@
         }
 
         try {
-          const { data, error } = await client.auth.signUp({
+          const { data, error } = await client.auth.signInWithPassword({
             email: email,
             password: password
           });
@@ -107,11 +119,13 @@
             return;
           }
 
-          mensaje.textContent =
-            "✅ Registro enviado correctamente.\n\n" +
-            "Revisá Supabase > Authentication > Users.\n\n" +
-            "Si no aparece, probá con otro email nuevo.";
-          console.log("REGISTRO OK:", data);
+          mensaje.textContent = "✅ Login correcto. Redirigiendo...";
+          console.log("LOGIN OK:", data);
+
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1200);
+
         } catch (e) {
           mensaje.textContent = "❌ Error JavaScript:\n" + e.message;
           console.error(e);
