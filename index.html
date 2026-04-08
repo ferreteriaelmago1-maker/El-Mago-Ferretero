@@ -957,6 +957,20 @@ alert("Error conectando con Mercado Pago: " + error.message);
 }
 });
 
+const data = await res.json();
+console.log("RESPUESTA MP:", data);
+
+if (data.init_point) {
+window.location.href = data.init_point;
+} else {
+alert("Error al crear pago: " + JSON.stringify(data));
+}
+} catch (error) {
+console.error("ERROR FETCH:", error);
+alert("Error conectando con Mercado Pago: " + error.message);
+}
+});
+
 calcShippingBtn.addEventListener('click', () => {
 const zoneCost = Number(shippingZone.value);
 const qty = Math.max(1, Number(shippingItems.value) || 1);
