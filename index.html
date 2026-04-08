@@ -925,7 +925,7 @@
       }
     });
 
-    mercadoPagoBtn.addEventListener('click', async () => {
+  mercadoPagoBtn.addEventListener('click', async () => {
 if (cart.length === 0) {
 alert('Agregá productos antes de pagar');
 return;
@@ -946,6 +946,21 @@ headers: {
 body: JSON.stringify({ items })
 });
 
+const data = await res.json();
+
+console.log("RESPUESTA MP:", data);
+
+if (data.init_point) {
+window.location.href = data.init_point;
+} else {
+alert("Error al crear pago: " + JSON.stringify(data));
+}
+
+} catch (error) {
+console.error("ERROR FETCH:", error);
+alert("Error conectando con Mercado Pago: " + error.message);
+}
+});
 const data = await res.json();
 
 if (data.init_point) {
