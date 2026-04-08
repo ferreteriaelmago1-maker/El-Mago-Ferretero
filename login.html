@@ -1,113 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<título>Iniciar sesión | El Mago Ferretero</title>
-<style>
-cuerpo {
-margen: 0;
-familia de fuentes: Arial, sans-serif;
-fondo: #0b0b0b;
-color: blanco;
-pantalla: flexible;
-alinear-elementos: centro;
-justificar-contenido: centro;
-altura mínima: 100vh;
-}
-.tarjeta {
-ancho: 100%;
-ancho máximo: 420px;
-fondo: #151515;
-borde: 1px sólido #242424;
-radio de borde: 16px;
-relleno: 28px;
-}
-h1 { color: #ff6a00; margin-top: 0; text-align: center; }
-aporte {
-ancho: 100%;
-relleno: 12px;
-margen inferior: 14px;
-fondo: #101010;
-borde: 1px sólido #2b2b2b;
-radio de borde: 10px;
-color: blanco;
-esquema: ninguno;
-}
-botón {
-ancho: 100%;
-relleno: 12px;
-fondo: #ff6a00;
-color: blanco;
-borde: ninguno;
-radio de borde: 10px;
-grosor de fuente: negrita;
-cursor: puntero;
-}
-#mensaje {
-margen superior: 16px;
-interlineado: 1,45;
-espacio en blanco: preenvoltura;
-}
-a { color: #ff6a00; text-decoration: none; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: #151515;
+      border: 1px solid #242424;
+      border-radius: 16px;
+      padding: 28px;
+    }
+    h1 { color: #ff6a00; margin-top: 0; text-align: center; }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      background: #101010;
+      border: 1px solid #2b2b2b;
+      border-radius: 10px;
+      color: white;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #mensaje {
+      margin-top: 16px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      background: #101010;
+      border: 1px solid #2b2b2b;
+      border-radius: 10px;
+      padding: 12px;
+      min-height: 70px;
+    }
+  </style>
 </head>
-<cuerpo>
-<div class="card">
-<h1>Ingresar</h1>
+<body>
+  <div class="card">
+    <h1>Crear cuenta</h1>
 
-<input id="email" type="email" placeholder="Tu correo electrónico" />
-<input id="password" type="password" placeholder="Tu contraseña" />
+    <input id="email" type="email" placeholder="Tu email">
+    <input id="password" type="password" placeholder="Tu contraseña">
 
-<button id="btnLogin" type="button">Ingresar</button>
+    <button id="btnRegistro" type="button">Registrarme</button>
 
-<div id="mensaje"></div>
+    <div id="mensaje">Cargando script...</div>
+  </div>
 
-<p style="margin-top:16px; text-align:center;">
-¿No tienes cuenta? <a href="registro.html">Registrarse</a>
-</p>
-</div>
+  <script>
+    const mensaje = document.getElementById('mensaje');
+    mensaje.textContent = '✅ JavaScript cargó bien. Ahora cargando Supabase...';
+  </script>
 
-<script type="module">
-import { createClient } from ' https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm ';
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const supabase = createClient(
-' https://vgfkluhqxngqoginpdmg.supabase.co ',
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8'
-);
+  <script>
+    const supabaseUrl = "https://vgfkluhqxngqoginpdmg.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
 
-const btn = document.getElementById('btnLogin');
-const mensaje = document.getElementById('mensaje');
+    if (!window.supabase) {
+      mensaje.textContent = "❌ No cargó la librería de Supabase. Puede ser caché o que el archivo publicado no es el nuevo.";
+    } else {
+      mensaje.textContent = "✅ Supabase cargó bien. Probá registrarte.";
+      const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-btn.addEventListener('click', async () => {
-const email = document.getElementById('email').value.trim();
-const password = document.getElementById('password').value;
+      document.getElementById('btnRegistro').addEventListener('click', async function () {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
 
-mensaje.textContent = 'Procesando...';
+        mensaje.textContent = "Procesando registro...";
 
-si (!correo electrónico || !contraseña) {
-mensaje.textContent = 'Completá email y contraseña.';
-devolver;
-}
+        if (!email || !password) {
+          mensaje.textContent = "❌ Completá email y contraseña.";
+          return;
+        }
 
-const { data, error } = await supabase.auth.signInWithPassword({
-correo electrónico,
-contraseña
-});
+        try {
+          const { data, error } = await client.auth.signUp({
+            email: email,
+            password: password
+          });
 
-console.log('DATOS DE INICIO DE SESIÓN:', datos);
-console.log('ERROR DE INICIO DE SESIÓN:', error);
+          if (error) {
+            mensaje.textContent = "❌ Error Supabase:\n" + error.message;
+            return;
+          }
 
-si (error) {
-mensaje.textContent = 'Error: ' + error.message;
-devolver;
-}
-
-mensaje.textContent = ' ✅ Iniciar sesión correctamente. Redirigir...';
-setTimeout(() => {
-window.location.href = 'index.html';
-}, 1000);
-});
-</script>
+          mensaje.textContent =
+            "✅ Registro enviado correctamente.\n\n" +
+            "Revisá Supabase > Authentication > Users.\n\n" +
+            "Si no aparece, probá con otro email nuevo.";
+          console.log("REGISTRO OK:", data);
+        } catch (e) {
+          mensaje.textContent = "❌ Error JavaScript:\n" + e.message;
+          console.error(e);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
