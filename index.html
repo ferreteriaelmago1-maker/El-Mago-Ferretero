@@ -826,32 +826,98 @@
       });
     });
 
-    checkoutBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Tu carrito está vacío.');
-        return;
-      }
-      alert('Checkout demo listo. El próximo paso sería pedir datos del cliente y confirmar el pedido antes del pago.');
-    });
+   <script>
+checkoutBtn.addEventListener('click', async () => {
+  if (cart.length === 0) {
+    alert('Tu carrito está vacío.');
+    return;
+  }
 
-    mercadoPagoBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Agregá productos al carrito antes de pagar.');
-        return;
-      }
-      alert('Botón de Mercado Pago en modo demo. Para activarlo de verdad hay que conectar tu cuenta de Mercado Pago.');
-    });
+  // 1. Verificar usuario logueado
+  const { data: { session } } = await client.auth.getSession();
 
-    calcShippingBtn.addEventListener('click', () => {
-      const zoneCost = Number(shippingZone.value);
-      const qty = Math.max(1, Number(shippingItems.value) || 1);
-      const extra = qty > 3 ? (qty - 3) * 400 : 0;
-      const totalShipping = zoneCost + extra;
-      shippingResult.textContent = 'Costo estimado: ' + formatPrice(totalShipping);
-    });
+  if (!session || !session.user) {
+    alert('Tenés que iniciar sesión para finalizar la compra.');
+    window.location.href = 'login.html';
+    return;
+  }
 
+  const userId = session.user.id;
+
+  // 2. Calcular total
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.qty;
+  });
+
+  try {
+    // 3. Traer perfil para completar dirección de envío
+    const { data: profile, error: profileError } = await client
+      .from('profiles')
+      .select('direccion, ciudad, codigo_postal')
+      .eq('id', userId)
+      .single();
+
+    if (profileError) {
+      alert('Error al cargar perfil: ' + profileError.message);
+      return;
+    }
+
+    // 4. Crear pedido
+    const { data: orderData, error: orderError } = await client
+      .from('orders')
+      .insert([
+        {
+          user_id: userId,
+          estado: 'pendiente',
+          total: total,
+          metodo_pago: 'pendiente',
+          metodo_envio: 'pendiente',
+          costo_envio: 0,
+          direccion_envio: profile?.direccion || '',
+          ciudad_envio: profile?.ciudad || '',
+          codigo_postal_envio: profile?.codigo_postal || ''
+        }
+      ])
+      .select()
+      .single();
+
+    if (orderError) {
+      alert('Error al crear pedido: ' + orderError.message);
+      return;
+    }
+
+    const orderId = orderData.id;
+
+    // 5. Guardar productos del pedido
+    const items = cart.map(item => ({
+      order_id: orderId,
+      user_id: userId,
+      producto_nombre: item.name,
+      precio: item.price,
+      cantidad: item.qty,
+      subtotal: item.price * item.qty
+    }));
+
+    const { error: itemsError } = await client
+      .from('order_items')
+      .insert(items);
+
+    if (itemsError) {
+      alert('Error al guardar productos del pedido: ' + itemsError.message);
+      return;
+    }
+
+    // 6. Vaciar carrito
+    cart.length = 0;
     updateCart();
-    cargarUsuarioArriba();
-  </script>
-</body>
-</html>
+
+    // 7. Avisar
+    alert('✅ Pedido creado correctamente. Ya podés verlo en Mi cuenta.');
+
+  } catch (e) {
+    alert('Error inesperado: ' + e.message);
+    console.error(e);
+  }
+});
+</script>
