@@ -107,6 +107,11 @@
       color: #d7d7d7;
       font-size: 14px;
       display: none;
+      text-decoration: none;
+    }
+
+    .user-name:hover {
+      color: #ff6a00;
     }
 
     .avatar {
@@ -485,7 +490,6 @@
       .user-box {
         position: static;
         transform: none;
-        margin-left: 0;
         margin-top: 10px;
         justify-content: center;
         width: 100%;
@@ -521,7 +525,7 @@
     </div>
 
     <div class="user-box" id="userBox">
-      <span class="user-name" id="userName"></span>
+      <a href="mi-cuenta.html" class="user-name" id="userName"></a>
       <div class="avatar" id="avatar"></div>
       <button class="logout-btn" id="logoutBtn">Salir</button>
     </div>
@@ -549,7 +553,6 @@
     <p class="section-text">Una selección de productos destacados para mostrar lo mejor de la tienda desde el inicio.</p>
 
     <div class="products" id="productGrid">
-
       <div class="card" data-name="martillo" data-price="3500">
         <h3>Martillo</h3>
         <p>Ideal para trabajos generales.</p>
@@ -591,7 +594,6 @@
         <div class="price">$7800</div>
         <button class="btn add-to-cart">Agregar al carrito</button>
       </div>
-
     </div>
   </div>
 
@@ -661,7 +663,18 @@
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
     const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    const cart = [];
+    const CART_KEY = 'mago_ferretero_cart';
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    let cart = getCart();
+
     const cartDrawer = document.getElementById('cartDrawer');
     const openCartBtn = document.getElementById('openCartBtn');
     const closeCartBtn = document.getElementById('closeCartBtn');
@@ -685,7 +698,7 @@
     const logoutBtn = document.getElementById('logoutBtn');
 
     function formatPrice(value) {
-      return '$' + value.toLocaleString('es-AR');
+      return '$' + Number(value || 0).toLocaleString('es-AR');
     }
 
     function updateCart() {
@@ -695,6 +708,7 @@
         cartItems.innerHTML = '<p class="cart-empty">Todavía no agregaste productos.</p>';
         cartTotal.textContent = 'Total: $0';
         cartCount.textContent = '0';
+        saveCart(cart);
         return;
       }
 
@@ -723,6 +737,7 @@
 
       cartTotal.textContent = 'Total: ' + formatPrice(total);
       cartCount.textContent = totalCount;
+      saveCart(cart);
     }
 
     function addToCart(name, price) {
@@ -826,98 +841,108 @@
       });
     });
 
-   <script>
-checkoutBtn.addEventListener('click', async () => {
-  if (cart.length === 0) {
-    alert('Tu carrito está vacío.');
-    return;
-  }
+    checkoutBtn.addEventListener('click', async () => {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
 
-  // 1. Verificar usuario logueado
-  const { data: { session } } = await client.auth.getSession();
+      const { data: { session } } = await client.auth.getSession();
 
-  if (!session || !session.user) {
-    alert('Tenés que iniciar sesión para finalizar la compra.');
-    window.location.href = 'login.html';
-    return;
-  }
+      if (!session || !session.user) {
+        alert('Tenés que iniciar sesión para finalizar la compra.');
+        window.location.href = 'login.html';
+        return;
+      }
 
-  const userId = session.user.id;
+      const userId = session.user.id;
 
-  // 2. Calcular total
-  let total = 0;
-  cart.forEach(item => {
-    total += item.price * item.qty;
-  });
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.qty;
+      });
 
-  try {
-    // 3. Traer perfil para completar dirección de envío
-    const { data: profile, error: profileError } = await client
-      .from('profiles')
-      .select('direccion, ciudad, codigo_postal')
-      .eq('id', userId)
-      .single();
+      try {
+        const { data: profile, error: profileError } = await client
+          .from('profiles')
+          .select('direccion, ciudad, codigo_postal')
+          .eq('id', userId)
+          .single();
 
-    if (profileError) {
-      alert('Error al cargar perfil: ' + profileError.message);
-      return;
-    }
-
-    // 4. Crear pedido
-    const { data: orderData, error: orderError } = await client
-      .from('orders')
-      .insert([
-        {
-          user_id: userId,
-          estado: 'pendiente',
-          total: total,
-          metodo_pago: 'pendiente',
-          metodo_envio: 'pendiente',
-          costo_envio: 0,
-          direccion_envio: profile?.direccion || '',
-          ciudad_envio: profile?.ciudad || '',
-          codigo_postal_envio: profile?.codigo_postal || ''
+        if (profileError) {
+          alert('Error al cargar perfil: ' + profileError.message);
+          return;
         }
-      ])
-      .select()
-      .single();
 
-    if (orderError) {
-      alert('Error al crear pedido: ' + orderError.message);
-      return;
-    }
+        const { data: orderData, error: orderError } = await client
+          .from('orders')
+          .insert([{
+            user_id: userId,
+            estado: 'pendiente',
+            total: total,
+            metodo_pago: 'pendiente',
+            metodo_envio: 'pendiente',
+            costo_envio: 0,
+            direccion_envio: profile?.direccion || '',
+            ciudad_envio: profile?.ciudad || '',
+            codigo_postal_envio: profile?.codigo_postal || ''
+          }])
+          .select()
+          .single();
 
-    const orderId = orderData.id;
+        if (orderError) {
+          alert('Error al crear pedido: ' + orderError.message);
+          return;
+        }
 
-    // 5. Guardar productos del pedido
-    const items = cart.map(item => ({
-      order_id: orderId,
-      user_id: userId,
-      producto_nombre: item.name,
-      precio: item.price,
-      cantidad: item.qty,
-      subtotal: item.price * item.qty
-    }));
+        const orderId = orderData.id;
 
-    const { error: itemsError } = await client
-      .from('order_items')
-      .insert(items);
+        const items = cart.map(item => ({
+          order_id: orderId,
+          user_id: userId,
+          producto_nombre: item.name,
+          precio: item.price,
+          cantidad: item.qty,
+          subtotal: item.price * item.qty
+        }));
 
-    if (itemsError) {
-      alert('Error al guardar productos del pedido: ' + itemsError.message);
-      return;
-    }
+        const { error: itemsError } = await client
+          .from('order_items')
+          .insert(items);
 
-    // 6. Vaciar carrito
-    cart.length = 0;
+        if (itemsError) {
+          alert('Error al guardar productos del pedido: ' + itemsError.message);
+          return;
+        }
+
+        cart = [];
+        updateCart();
+
+        alert('✅ Pedido creado correctamente. Ya podés verlo en Mi cuenta.');
+      } catch (e) {
+        alert('Error inesperado: ' + e.message);
+        console.error(e);
+      }
+    });
+
+    mercadoPagoBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Agregá productos al carrito antes de pagar.');
+        return;
+      }
+      alert('Botón de Mercado Pago en modo demo. Para activarlo de verdad hay que conectar tu cuenta de Mercado Pago.');
+    });
+
+    calcShippingBtn.addEventListener('click', () => {
+      const zoneCost = Number(shippingZone.value);
+      const qty = Math.max(1, Number(shippingItems.value) || 1);
+      const extra = qty > 3 ? (qty - 3) * 400 : 0;
+      const totalShipping = zoneCost + extra;
+      shippingResult.textContent = 'Costo estimado: ' + formatPrice(totalShipping);
+    });
+
     updateCart();
-
-    // 7. Avisar
-    alert('✅ Pedido creado correctamente. Ya podés verlo en Mi cuenta.');
-
-  } catch (e) {
-    alert('Error inesperado: ' + e.message);
-    console.error(e);
-  }
-});
-</script>
+    cargarUsuarioArriba();
+  </script>
+</body>
+</html>
