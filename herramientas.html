@@ -1,65 +1,827 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Herramientas - El Mago Ferretero</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herramientas | El Mago Ferretero</title>
   <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
     body {
+      margin: 0;
+      font-family: Arial, sans-serif;
       background: #0b0b0b;
       color: white;
-      font-family: Arial;
-      text-align: center;
-      padding: 40px;
     }
 
-    h1 {
+    a { text-decoration: none; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11,11,11,0.97);
+      border-bottom: 1px solid #1f1f1f;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+    }
+
+    .menu-centered {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .menu-centered a,
+    .dropdown-btn {
+      color: white;
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .menu-centered a:hover,
+    .dropdown-btn:hover {
       color: #ff6a00;
     }
 
-    .card {
-      background: #1a1a1a;
-      padding: 20px;
-      margin: 20px;
+    .dropdown-container {
+      position: relative;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: #141414;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      min-width: 230px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+      overflow: hidden;
+      z-index: 1001;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 13px 16px;
+      color: white;
+      border-bottom: 1px solid #222;
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background: #ff6a00;
+      color: white;
+    }
+
+    .dropdown-container:hover .dropdown,
+    .dropdown-container:focus-within .dropdown {
+      display: block;
+    }
+
+    .user-box {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-name {
+      color: #d7d7d7;
+      font-size: 14px;
+      display: none;
+      text-decoration: none;
+    }
+
+    .user-name:hover {
+      color: #ff6a00;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ff6a00;
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 8px 18px rgba(255,106,0,0.25);
+    }
+
+    .logout-btn {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 1px solid #333;
       border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      border-color: #ff6a00;
+      color: #ff6a00;
+    }
+
+    .hero {
+      padding: 64px 20px 40px;
+      text-align: center;
+      background:
+        radial-gradient(circle at top left, rgba(91,33,182,0.20), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,106,0,0.16), transparent 24%),
+        linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
+    }
+
+    .hero-badge {
       display: inline-block;
-      width: 200px;
+      padding: 8px 14px;
+      border: 1px solid #3a2d22;
+      background: rgba(255,106,0,0.08);
+      color: #ffb37a;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      color: #ff6a00;
+      font-size: 46px;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: #d7d7d7;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #171717;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-width: 320px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: #8f8f8f;
+    }
+
+    .cart-button {
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(255,106,0,0.18);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #25d366;
+      color: white;
+      border-radius: 999px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section {
+      padding: 26px 20px 56px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: #bfbfbf;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid #232323;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+      text-align: left;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #333;
+      box-shadow: 0 18px 36px rgba(0,0,0,0.28);
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,106,0,0.12);
+      color: #ffb37a;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #d0d0d0;
+      min-height: 44px;
+      line-height: 1.45;
+    }
+
+    .price {
+      font-size: 28px;
+      font-weight: bold;
+      color: #ff6a00;
+      margin: 12px 0 18px;
     }
 
     .btn {
+      padding: 12px 20px;
       background: #ff6a00;
       color: white;
-      padding: 10px;
+      border-radius: 12px;
+      display: inline-block;
+      font-weight: bold;
       border: none;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+    }
+
+    .btn:hover {
+      opacity: 0.95;
+    }
+
+    .bottom-actions {
+      max-width: 1180px;
+      margin: 26px auto 0;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #333;
+      color: white;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      max-width: 100%;
+      height: 100vh;
+      background: #111;
+      border-left: 1px solid #232323;
+      box-shadow: -12px 0 30px rgba(0,0,0,0.35);
+      z-index: 1200;
+      transition: right 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #232323;
+    }
+
+    .cart-header h3 {
+      margin: 0;
+      color: #ff6a00;
+    }
+
+    .cart-close {
+      background: transparent;
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+    }
+
+    .cart-empty {
+      color: #bcbcbc;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #232323;
+      padding: 0 0 14px;
+      margin-bottom: 14px;
+    }
+
+    .cart-item h4 {
+      margin: 0 0 6px;
+    }
+
+    .cart-item p {
+      margin: 4px 0;
+      color: #cfcfcf;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .qty-controls button {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      color: white;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       cursor: pointer;
+    }
+
+    .remove-btn {
+      margin-top: 8px;
+      background: transparent;
+      border: none;
+      color: #ff6a00;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .cart-footer {
+      border-top: 1px solid #232323;
+      padding: 18px 20px;
+    }
+
+    .cart-total {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 14px;
+      color: #ff6a00;
+    }
+
+    footer {
+      border-top: 1px solid #202020;
+      padding: 28px 20px 40px;
+      text-align: center;
+      color: #bcbcbc;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 16px; }
+      .menu-centered { gap: 16px; }
+      .user-box {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+        justify-content: center;
+        width: 100%;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .search-box {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-<h1>Herramientas</h1>
+  <nav class="navbar">
+    <div class="menu-centered">
+      <a href="index.html">Inicio</a>
 
-<div class="card">
-  <h3>Martillo</h3>
-  <p>$3500</p>
-  <button class="btn">Agregar</button>
-</div>
+      <div class="dropdown-container">
+        <a href="catalogo.html" class="dropdown-btn">Catálogo ▼</a>
+        <div class="dropdown">
+          <a href="herramientas.html">Herramientas</a>
+          <a href="electricidad.html">Electricidad</a>
+          <a href="plomeria.html">Plomería</a>
+          <a href="pintureria.html">Pinturería</a>
+          <a href="tornilleria.html">Tornillería</a>
+          <a href="jardin.html">Jardín</a>
+        </div>
+      </div>
 
-<div class="card">
-  <h3>Llave francesa</h3>
-  <p>$4200</p>
-  <button class="btn">Agregar</button>
-</div>
+      <a href="contacto.html">Contacto</a>
+      <a href="login.html" id="loginLink">Ingresar</a>
+      <a href="registro.html" id="registroLink">Registrarse</a>
+    </div>
 
-<div class="card">
-  <h3>Destornillador</h3>
-  <p>$1800</p>
-  <button class="btn">Agregar</button>
-</div>
+    <div class="user-box" id="userBox">
+      <a href="mi-cuenta.html" class="user-name" id="userName"></a>
+      <div class="avatar" id="avatar"></div>
+      <button class="logout-btn" id="logoutBtn">Salir</button>
+    </div>
+  </nav>
 
-<br><br>
+  <section class="hero">
+    <div class="hero-badge">Ferretería profesional</div>
+    <h1>Herramientas</h1>
+    <p>Seleccioná herramientas de uso general y agregalas directo al carrito. Diseño limpio, rápido y sin mandarte a WhatsApp.</p>
 
-<a href="index.html" style="color:#ff6a00;">← Volver al inicio</a>
+    <div class="top-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar herramientas..." />
+      </div>
 
+      <button class="cart-button" id="openCartBtn">
+        🛒 Carrito
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <h2>Catálogo de herramientas</h2>
+      <p>Productos de ejemplo para mostrar cómo quedaría la sección.</p>
+    </div>
+
+    <div class="products" id="productGrid">
+      <div class="card" data-name="martillo" data-price="3500">
+        <div class="card-tag">Herramientas</div>
+        <h3>Martillo</h3>
+        <p>Ideal para trabajos generales en casa, taller o instalación.</p>
+        <div class="price">$3500</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="llave francesa" data-price="4200">
+        <div class="card-tag">Herramientas</div>
+        <h3>Llave francesa</h3>
+        <p>Ajustable, práctica y muy útil para trabajos de mantenimiento.</p>
+        <div class="price">$4200</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="destornillador plano" data-price="1800">
+        <div class="card-tag">Herramientas</div>
+        <h3>Destornillador plano</h3>
+        <p>Resistente y cómodo para armado, ajustes y reparaciones.</p>
+        <div class="price">$1800</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="destornillador philips" data-price="1900">
+        <div class="card-tag">Herramientas</div>
+        <h3>Destornillador Philips</h3>
+        <p>Para tornillos cruzados y tareas de armado general.</p>
+        <div class="price">$1900</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="alicate universal" data-price="4800">
+        <div class="card-tag">Herramientas</div>
+        <h3>Alicate universal</h3>
+        <p>Práctico para sujetar, cortar y doblar materiales.</p>
+        <div class="price">$4800</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="pinza pico de loro" data-price="5600">
+        <div class="card-tag">Herramientas</div>
+        <h3>Pinza pico de loro</h3>
+        <p>Muy buena para ajustes fuertes y trabajos con caños.</p>
+        <div class="price">$5600</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="serrucho" data-price="6100">
+        <div class="card-tag">Herramientas</div>
+        <h3>Serrucho</h3>
+        <p>Cortes manuales rápidos y precisos en distintos trabajos.</p>
+        <div class="price">$6100</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="cinta metrica" data-price="2300">
+        <div class="card-tag">Herramientas</div>
+        <h3>Cinta métrica</h3>
+        <p>Medición confiable para instalaciones y tareas generales.</p>
+        <div class="price">$2300</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="nivel manual" data-price="3900">
+        <div class="card-tag">Herramientas</div>
+        <h3>Nivel manual</h3>
+        <p>Ideal para instalaciones prolijas y trabajos de precisión.</p>
+        <div class="price">$3900</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+
+      <div class="card" data-name="llave tubo" data-price="5100">
+        <div class="card-tag">Herramientas</div>
+        <h3>Llave tubo</h3>
+        <p>Muy útil para piezas ajustadas y tuercas difíciles.</p>
+        <div class="price">$5100</div>
+        <button class="btn add-to-cart">Agregar al carrito</button>
+      </div>
+    </div>
+
+    <div class="bottom-actions">
+      <a href="catalogo.html" class="btn btn-secondary">Ver catálogo general</a>
+      <a href="index.html" class="btn btn-secondary">Volver al inicio</a>
+    </div>
+  </section>
+
+  <footer>
+    El Mago Ferretero · Herramientas
+  </footer>
+
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Tu carrito</h3>
+      <button class="cart-close" id="closeCartBtn">&times;</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Todavía no agregaste productos.</p>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total" id="cartTotal">Total: $0</div>
+      <button class="btn" id="goIndexBtn">Ir al checkout</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = "https://vgfkluhqxngqoginpdmg.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
+    const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    const CART_KEY = 'mago_ferretero_cart';
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    let cart = getCart();
+
+    const openCartBtn = document.getElementById('openCartBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartCount = document.getElementById('cartCount');
+    const addButtons = document.querySelectorAll('.add-to-cart');
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.card');
+
+    const loginLink = document.getElementById('loginLink');
+    const registroLink = document.getElementById('registroLink');
+    const userName = document.getElementById('userName');
+    const avatar = document.getElementById('avatar');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function formatPrice(value) {
+      return '$' + Number(value || 0).toLocaleString('es-AR');
+    }
+
+    function updateCart() {
+      cartItems.innerHTML = '';
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="cart-empty">Todavía no agregaste productos.</p>';
+        cartTotal.textContent = 'Total: $0';
+        cartCount.textContent = '0';
+        saveCart(cart);
+        return;
+      }
+
+      let total = 0;
+      let totalCount = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        totalCount += item.qty;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <h4>${item.name}</h4>
+          <p>${formatPrice(item.price)} x ${item.qty}</p>
+          <div class="qty-controls">
+            <button onclick="changeQty(${index}, -1)">-</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${index}, 1)">+</button>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Eliminar</button>
+        `;
+        cartItems.appendChild(div);
+      });
+
+      cartTotal.textContent = 'Total: ' + formatPrice(total);
+      cartCount.textContent = totalCount;
+      saveCart(cart);
+    }
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCart();
+      cartDrawer.classList.add('open');
+    }
+
+    function changeQty(index, amount) {
+      cart[index].qty += amount;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function getInitials(nombre, apellido) {
+      const n = nombre ? nombre.trim().charAt(0).toUpperCase() : '';
+      const a = apellido ? apellido.trim().charAt(0).toUpperCase() : '';
+      return (n + a) || 'US';
+    }
+
+    async function cargarUsuarioArriba() {
+      const { data: { session } } = await client.auth.getSession();
+
+      if (!session || !session.user) {
+        loginLink.style.display = 'inline-block';
+        registroLink.style.display = 'inline-block';
+        userName.style.display = 'none';
+        avatar.style.display = 'none';
+        logoutBtn.style.display = 'none';
+        return;
+      }
+
+      loginLink.style.display = 'none';
+      registroLink.style.display = 'none';
+
+      const userId = session.user.id;
+
+      const { data, error } = await client
+        .from('profiles')
+        .select('nombre, apellido')
+        .eq('id', userId)
+        .single();
+
+      if (error || !data) {
+        userName.textContent = 'Mi cuenta';
+        avatar.textContent = 'US';
+      } else {
+        userName.textContent = 'Hola, ' + data.nombre;
+        avatar.textContent = getInitials(data.nombre, data.apellido);
+      }
+
+      userName.style.display = 'inline-block';
+      avatar.style.display = 'flex';
+      logoutBtn.style.display = 'inline-block';
+    }
+
+    logoutBtn.addEventListener('click', async () => {
+      await client.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    window.changeQty = changeQty;
+    window.removeItem = removeItem;
+
+    addButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        const name = card.dataset.name;
+        const price = Number(card.dataset.price);
+        addToCart(name, price);
+      });
+    });
+
+    openCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.add('open');
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+    });
+
+    document.getElementById('goIndexBtn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        card.classList.toggle('hidden', !name.includes(term));
+      });
+    });
+
+    updateCart();
+    cargarUsuarioArriba();
+  </script>
 </body>
 </html>
