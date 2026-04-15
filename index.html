@@ -1054,40 +1054,43 @@
       }
     });
 
-    mercadoPagoBtn.addEventListener('click', async () => {
-      if (cart.length === 0) {
-        alert('Agregá productos antes de pagar');
-        return;
-      }
+   mercadoPagoBtn.addEventListener('click', async () => {
+  if (cart.length === 0) {
+    alert('Agregá productos antes de pagar');
+    return;
+  }
 
-      const items = cart.map(item => ({
-        title: item.name,
-        quantity: item.qty,
-        unit_price: parseFloat(item.price)
-      }));
+  const items = cart.map(item => ({
+    title: item.name,
+    quantity: item.qty,
+    unit_price: parseFloat(item.price)
+  }));
 
-      try {
-        const res = await fetch("https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/rapid-processor", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ items })
-        });
-
-        const data = await res.json();
-        console.log("RESPUESTA MP:", data);
-
-        if (data.init_point) {
-          window.location.href = data.init_point;
-        } else {
-          alert("Error al crear pago: " + JSON.stringify(data));
-        }
-      } catch (error) {
-        console.error("ERROR FETCH:", error);
-        alert("Error conectando con Mercado Pago: " + error.message);
-      }
+  try {
+    const res = await fetch("https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/rapid-processor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ items })
     });
+
+    const data = await res.json();
+    console.log("RESPUESTA MP:", data);
+
+    if (data.sandbox_init_point) {
+      window.location.href = data.sandbox_init_point;
+    } else if (data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      alert("Error al crear pago: " + JSON.stringify(data));
+    }
+
+  } catch (error) {
+    console.error("ERROR FETCH:", error);
+    alert("Error conectando con Mercado Pago: " + error.message);
+  }
+});
 
     calcShippingBtn.addEventListener('click', () => {
       const zoneCost = Number(shippingZone.value);
