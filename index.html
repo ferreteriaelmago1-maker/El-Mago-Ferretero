@@ -366,8 +366,7 @@
     }
 
     .shipping-box,
-    .social-card,
-    .contact-box {
+    .social-card {
       background: linear-gradient(180deg, #171717 0%, #121212 100%);
       border: 1px solid #262626;
       border-radius: 18px;
@@ -571,6 +570,64 @@
       font-size: 14px;
     }
 
+    .guest-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.78);
+      z-index: 1300;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .guest-modal-content {
+      width: 100%;
+      max-width: 560px;
+      background: #151515;
+      border: 1px solid #262626;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 24px 40px rgba(0,0,0,0.35);
+    }
+
+    .guest-modal-content h2 {
+      margin-top: 0;
+      color: #ff6a00;
+    }
+
+    .guest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .guest-full {
+      grid-column: 1 / -1;
+    }
+
+    .guest-modal input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2b2b2b;
+      background: #101010;
+      color: white;
+      outline: none;
+    }
+
+    .guest-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: #2a2a2a;
+      box-shadow: none;
+    }
+
     @media (max-width: 900px) {
       h1 { font-size: 38px; }
       .hero-text { font-size: 17px; }
@@ -587,6 +644,12 @@
       .navbar {
         flex-direction: column;
         gap: 10px;
+      }
+      .guest-grid {
+        grid-template-columns: 1fr;
+      }
+      .guest-full {
+        grid-column: auto;
       }
     }
   </style>
@@ -784,14 +847,49 @@
       <button class="btn" id="checkoutBtn" style="width:100%; margin-bottom:10px;">Finalizar compra</button>
       <button class="btn" id="mercadoPagoBtn" style="width:100%;">Pagar con Mercado Pago</button>
       <div class="checkout-note">
-        Mercado Pago usa la function `crear-preferencia` de Supabase.
+        Si no estás logueado, podés comprar igual como invitado.
+      </div>
+    </div>
+  </div>
+
+  <div class="guest-modal" id="guestCheckoutModal">
+    <div class="guest-modal-content">
+      <h2>Finalizar compra como invitado</h2>
+
+      <div class="guest-grid">
+        <div>
+          <input id="guestNombre" type="text" placeholder="Nombre">
+        </div>
+        <div>
+          <input id="guestApellido" type="text" placeholder="Apellido">
+        </div>
+        <div class="guest-full">
+          <input id="guestEmail" type="email" placeholder="Email">
+        </div>
+        <div class="guest-full">
+          <input id="guestTelefono" type="text" placeholder="Teléfono">
+        </div>
+        <div class="guest-full">
+          <input id="guestDireccion" type="text" placeholder="Dirección">
+        </div>
+        <div>
+          <input id="guestCiudad" type="text" placeholder="Ciudad">
+        </div>
+        <div>
+          <input id="guestCodigoPostal" type="text" placeholder="Código postal">
+        </div>
+      </div>
+
+      <div class="guest-actions">
+        <button class="btn btn-secondary" id="guestCancelBtn">Cancelar</button>
+        <button class="btn" id="guestContinueBtn">Continuar al pago</button>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const supabaseUrl = "https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/rapid-processor";
+    const supabaseUrl = "https://vgfkluhqxngqoginpdmg.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZmtsdWhxeG5ncW9naW5wZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDU0NTYsImV4cCI6MjA5MTA4MTQ1Nn0.BYUiAbd7jmDnxd9jWXGpnOp2fDEjD8xVtJF-NVLN6U8";
     const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
@@ -828,6 +926,10 @@
     const userName = document.getElementById('userName');
     const avatar = document.getElementById('avatar');
     const logoutBtn = document.getElementById('logoutBtn');
+
+    const guestCheckoutModal = document.getElementById('guestCheckoutModal');
+    const guestCancelBtn = document.getElementById('guestCancelBtn');
+    const guestContinueBtn = document.getElementById('guestContinueBtn');
 
     function formatPrice(value) {
       return '$' + Number(value || 0).toLocaleString('es-AR');
@@ -943,6 +1045,294 @@
       window.location.href = 'index.html';
     });
 
+    function openGuestCheckout() {
+      guestCheckoutModal.style.display = 'flex';
+    }
+
+    function closeGuestCheckout() {
+      guestCheckoutModal.style.display = 'none';
+    }
+
+    guestCancelBtn.addEventListener('click', closeGuestCheckout);
+
+    function getGuestData() {
+      return {
+        nombre: document.getElementById('guestNombre').value.trim(),
+        apellido: document.getElementById('guestApellido').value.trim(),
+        email: document.getElementById('guestEmail').value.trim(),
+        telefono: document.getElementById('guestTelefono').value.trim(),
+        direccion: document.getElementById('guestDireccion').value.trim(),
+        ciudad: document.getElementById('guestCiudad').value.trim(),
+        codigo_postal: document.getElementById('guestCodigoPostal').value.trim()
+      };
+    }
+
+    function validateGuestData(guestData) {
+      return guestData.nombre &&
+             guestData.apellido &&
+             guestData.email &&
+             guestData.telefono &&
+             guestData.direccion &&
+             guestData.ciudad &&
+             guestData.codigo_postal;
+    }
+
+    async function asegurarRewards(userId) {
+      const { data: rewards } = await client
+        .from('customer_rewards')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (!rewards) {
+        await client
+          .from('customer_rewards')
+          .insert([{
+            user_id: userId,
+            puntos: 0,
+            primera_compra_descuento_usado: false
+          }]);
+
+        const { data: rewardsNuevo } = await client
+          .from('customer_rewards')
+          .select('*')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        return rewardsNuevo;
+      }
+
+      return rewards;
+    }
+
+    async function crearPedidoBase(session, guestData = null) {
+      let subtotal = 0;
+      cart.forEach(item => {
+        subtotal += item.price * item.qty;
+      });
+
+      let descuentoAplicado = 0;
+      let puntosOtorgados = 0;
+      let userId = null;
+      let esInvitado = true;
+
+      let cliente_nombre = "";
+      let cliente_apellido = "";
+      let cliente_email = "";
+      let cliente_telefono = "";
+      let direccion_envio = "";
+      let ciudad_envio = "";
+      let codigo_postal_envio = "";
+
+      if (session && session.user) {
+        userId = session.user.id;
+        esInvitado = false;
+
+        const { data: profile, error: profileError } = await client
+          .from('profiles')
+          .select('*')
+          .eq('id', userId)
+          .single();
+
+        if (profileError) {
+          throw new Error('No se pudo cargar el perfil del usuario.');
+        }
+
+        cliente_nombre = profile?.nombre || "";
+        cliente_apellido = profile?.apellido || "";
+        cliente_email = session.user.email || "";
+        cliente_telefono = profile?.telefono || "";
+        direccion_envio = profile?.direccion || "";
+        ciudad_envio = profile?.ciudad || "";
+        codigo_postal_envio = profile?.codigo_postal || "";
+
+        const rewards = await asegurarRewards(userId);
+
+        if (!rewards || rewards.primera_compra_descuento_usado === false) {
+          descuentoAplicado = subtotal * 0.10;
+        }
+
+        const totalFinalRegistrado = subtotal - descuentoAplicado;
+        puntosOtorgados = Math.floor(totalFinalRegistrado / 1000) * 10;
+        subtotal = totalFinalRegistrado;
+
+      } else if (guestData) {
+        cliente_nombre = guestData.nombre;
+        cliente_apellido = guestData.apellido;
+        cliente_email = guestData.email;
+        cliente_telefono = guestData.telefono;
+        direccion_envio = guestData.direccion;
+        ciudad_envio = guestData.ciudad;
+        codigo_postal_envio = guestData.codigo_postal;
+      } else {
+        throw new Error('Faltan datos del comprador.');
+      }
+
+      const { data: orderData, error: orderError } = await client
+        .from('orders')
+        .insert([{
+          user_id: userId,
+          estado: 'pendiente',
+          total: subtotal,
+          metodo_pago: 'mercado_pago',
+          metodo_envio: 'pendiente',
+          costo_envio: 0,
+          direccion_envio,
+          ciudad_envio,
+          codigo_postal_envio,
+          cliente_nombre,
+          cliente_apellido,
+          cliente_email,
+          cliente_telefono,
+          es_invitado: esInvitado,
+          descuento_aplicado: descuentoAplicado,
+          puntos_otorgados: puntosOtorgados,
+          mp_status: 'pending'
+        }])
+        .select()
+        .single();
+
+      if (orderError) {
+        throw new Error(orderError.message);
+      }
+
+      const orderId = orderData.id;
+
+      const items = cart.map(item => ({
+        order_id: orderId,
+        user_id: userId,
+        producto_nombre: item.name,
+        precio: item.price,
+        cantidad: item.qty,
+        subtotal: item.price * item.qty
+      }));
+
+      const { error: itemsError } = await client
+        .from('order_items')
+        .insert(items);
+
+      if (itemsError) {
+        throw new Error(itemsError.message);
+      }
+
+      return {
+        orderId,
+        totalFinal: subtotal,
+        descuentoAplicado,
+        puntosOtorgados,
+        esInvitado
+      };
+    }
+
+    async function actualizarRewardsDespuesPedido(userId, descuentoAplicado, puntosOtorgados) {
+      const rewards = await asegurarRewards(userId);
+
+      if (!rewards) return;
+
+      const nuevosPuntos = (rewards.puntos || 0) + (puntosOtorgados || 0);
+      const usoDescuento = descuentoAplicado > 0 ? true : rewards.primera_compra_descuento_usado;
+
+      await client
+        .from('customer_rewards')
+        .update({
+          puntos: nuevosPuntos,
+          primera_compra_descuento_usado: usoDescuento,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', userId);
+    }
+
+    async function crearPedidoSinPagar() {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+
+      const { data: { session } } = await client.auth.getSession();
+
+      if (!session || !session.user) {
+        openGuestCheckout();
+        return;
+      }
+
+      try {
+        const result = await crearPedidoBase(session, null);
+        await actualizarRewardsDespuesPedido(session.user.id, result.descuentoAplicado, result.puntosOtorgados);
+        alert('✅ Pedido creado correctamente. Ya podés verlo en Mi cuenta.');
+      } catch (e) {
+        alert('Error al crear pedido: ' + e.message);
+      }
+    }
+
+    async function pagarConMercadoPago(session, guestData = null) {
+      if (cart.length === 0) {
+        alert('Agregá productos antes de pagar');
+        return;
+      }
+
+      const result = await crearPedidoBase(session, guestData);
+
+      if (session && session.user) {
+        await actualizarRewardsDespuesPedido(session.user.id, result.descuentoAplicado, result.puntosOtorgados);
+      }
+
+      const items = cart.map(item => ({
+        title: item.name,
+        quantity: item.qty,
+        unit_price: parseFloat(item.price)
+      }));
+
+      const res = await fetch("https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/rapid-processor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          items,
+          external_reference: String(result.orderId)
+        })
+      });
+
+      const data = await res.json();
+      console.log("RESPUESTA MP:", data);
+
+      if (data.id) {
+        await client
+          .from('orders')
+          .update({
+            mp_preference_id: data.id
+          })
+          .eq('id', result.orderId);
+      }
+
+      if (data.sandbox_init_point) {
+        window.location.href = data.sandbox_init_point;
+        return;
+      }
+
+      if (data.init_point) {
+        window.location.href = data.init_point;
+        return;
+      }
+
+      throw new Error(JSON.stringify(data));
+    }
+
+    guestContinueBtn.addEventListener('click', async () => {
+      const guestData = getGuestData();
+
+      if (!validateGuestData(guestData)) {
+        alert('Completá todos los datos para seguir.');
+        return;
+      }
+
+      try {
+        await pagarConMercadoPago(null, guestData);
+      } catch (error) {
+        alert('Error al crear pago: ' + error.message);
+      }
+    });
+
     window.changeQty = changeQty;
     window.removeItem = removeItem;
 
@@ -973,124 +1363,23 @@
       });
     });
 
-    checkoutBtn.addEventListener('click', async () => {
-      if (cart.length === 0) {
-        alert('Tu carrito está vacío.');
-        return;
-      }
+    checkoutBtn.addEventListener('click', crearPedidoSinPagar);
 
+    mercadoPagoBtn.addEventListener('click', async () => {
       const { data: { session } } = await client.auth.getSession();
 
       if (!session || !session.user) {
-        alert('Tenés que iniciar sesión para finalizar la compra.');
-        window.location.href = 'login.html';
+        openGuestCheckout();
         return;
       }
 
-      const userId = session.user.id;
-
-      let total = 0;
-      cart.forEach(item => {
-        total += item.price * item.qty;
-      });
-
       try {
-        const { data: profile, error: profileError } = await client
-          .from('profiles')
-          .select('direccion, ciudad, codigo_postal')
-          .eq('id', userId)
-          .single();
-
-        if (profileError) {
-          alert('Error al cargar perfil: ' + profileError.message);
-          return;
-        }
-
-        const { data: orderData, error: orderError } = await client
-          .from('orders')
-          .insert([{
-            user_id: userId,
-            estado: 'pendiente',
-            total: total,
-            metodo_pago: 'pendiente',
-            metodo_envio: 'pendiente',
-            costo_envio: 0,
-            direccion_envio: profile?.direccion || '',
-            ciudad_envio: profile?.ciudad || '',
-            codigo_postal_envio: profile?.codigo_postal || ''
-          }])
-          .select()
-          .single();
-
-        if (orderError) {
-          alert('Error al crear pedido: ' + orderError.message);
-          return;
-        }
-
-        const orderId = orderData.id;
-
-        const items = cart.map(item => ({
-          order_id: orderId,
-          user_id: userId,
-          producto_nombre: item.name,
-          precio: item.price,
-          cantidad: item.qty,
-          subtotal: item.price * item.qty
-        }));
-
-        const { error: itemsError } = await client
-          .from('order_items')
-          .insert(items);
-
-        if (itemsError) {
-          alert('Error al guardar productos del pedido: ' + itemsError.message);
-          return;
-        }
-
-        alert('✅ Pedido creado correctamente. Ya podés verlo en Mi cuenta.');
-      } catch (e) {
-        alert('Error inesperado: ' + e.message);
-        console.error(e);
+        await pagarConMercadoPago(session, null);
+      } catch (error) {
+        console.error("ERROR MP:", error);
+        alert("Error conectando con Mercado Pago: " + error.message);
       }
     });
-
-   mercadoPagoBtn.addEventListener('click', async () => {
-  if (cart.length === 0) {
-    alert('Agregá productos antes de pagar');
-    return;
-  }
-
-  const items = cart.map(item => ({
-    title: item.name,
-    quantity: item.qty,
-    unit_price: parseFloat(item.price)
-  }));
-
-  try {
-    const res = await fetch("https://vgfkluhqxngqoginpdmg.supabase.co/functions/v1/rapid-processor", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ items })
-    });
-
-    const data = await res.json();
-    console.log("RESPUESTA MP:", data);
-
-    if (data.sandbox_init_point) {
-      window.location.href = data.sandbox_init_point;
-    } else if (data.init_point) {
-      window.location.href = data.init_point;
-    } else {
-      alert("Error al crear pago: " + JSON.stringify(data));
-    }
-
-  } catch (error) {
-    console.error("ERROR FETCH:", error);
-    alert("Error conectando con Mercado Pago: " + error.message);
-  }
-});
 
     calcShippingBtn.addEventListener('click', () => {
       const zoneCost = Number(shippingZone.value);
