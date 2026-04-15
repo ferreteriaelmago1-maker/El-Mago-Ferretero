@@ -1063,7 +1063,7 @@
       const items = cart.map(item => ({
         title: item.name,
         quantity: item.qty,
-        unit_price: Number(item.price)
+        unit_price: parseFloat(item.price)
       }));
 
       try {
